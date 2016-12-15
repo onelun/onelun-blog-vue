@@ -1,28 +1,30 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <hello></hello>
+  <div>
+    <div class="app-content">
+      <!--导航条-->
+      <blog-nav></blog-nav>
+      <!--路由外链-->
+      <router-view class="view"></router-view>
+    </div>
   </div>
 </template>
 
-<script>
-import Hello from './components/Hello'
+<script type="text/ecmascript-6">
+  import blogNav from 'components/blog/nav.vue';
+  export default {
+    data() {
+      return {};
+    },
+    methods: {
 
-export default {
-  name: 'app',
-  components: {
-    Hello
-  }
-}
+    },
+    components: {
+      blogNav
+    }
+  };
+
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>

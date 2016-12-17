@@ -5,17 +5,17 @@ const routes = [
   {
     path: '/',
     name: 'index',
-    component: require('./components/blog/index.vue')
+    component: require('./views/blog/index.vue')
   },
   {
     path: '/blog',
     name: 'blog',
-    component: require('./components/blog/blog.vue')
+    component: require('./views/blog/blog.vue')
   },
   {
     path: '/music',
     name: 'music',
-    component: require('./components/blog/music.vue')
+    component: require('./views/blog/music.vue')
   },
   {
     path: '/login',

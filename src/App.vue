@@ -4,13 +4,15 @@
       <!--导航条-->
       <blog-nav></blog-nav>
       <!--路由外链-->
-      <router-view class="view"></router-view>
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-  import blogNav from 'components/blog/nav.vue';
+  import blogNav from 'views/blog/nav.vue';
   export default {
     data() {
       return {};
@@ -25,6 +27,10 @@
 
 </script>
 
-<style>
-
+<style lang="scss">
+  @import "assets/css/theme.scss";
+  /*内容区*/
+  .app-content {
+    width: 100%;
+  }
 </style>

@@ -12,8 +12,10 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import store from './vuex/store';
   import blogNav from 'views/blog/nav.vue';
   export default {
+    store,
     data() {
       return {};
     },

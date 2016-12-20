@@ -10,7 +10,20 @@ const routes = [
   {
     path: '/blog',
     name: 'blog',
-    component: require('./views/blog/blog.vue')
+    component: require('./views/blog/blog.vue'),
+    redirect: {
+      name: 'artList',
+      query: {
+        listType: 'latest'
+      }
+    },
+    children: [
+      {
+        path: 'art-list',
+        name: 'artList',
+        component: require('./views/blog/articleList.vue')
+      }
+    ]
   },
   {
     path: '/music',

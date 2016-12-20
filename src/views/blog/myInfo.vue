@@ -1,5 +1,5 @@
 <template>
-    <div class="myinfo" :class="{'showMyWords-active': isShowMywords }">
+    <div class="myinfo" :class="{'showMyWords-active': showMyWords }">
       <section class="detail text-center">
         <section class="detail-1">
           <section class="detail-img-box" @click="setMyWordStatus">
@@ -53,6 +53,45 @@
   @import "../../assets/css/theme.scss";
   $animationTime_1: 500ms;
   $animationTime_2: 200ms;
+  .showMyWords-active {
+  @include media(">desktop") {
+    width: 100% !important;
+    .mywords {
+      width: 720px !important;
+      opacity: 1 !important;
+      overflow: inherit !important;
+      transition: width $animationTime_1 ease, opacity $animationTime_2 ease $animationTime_1 !important;
+    }
+  }
+  @include media("<=desktop") {
+    width: 100% !important;
+    height: 100% !important;
+    position: fixed !important;
+    .mywords {
+      height: 230px !important;
+      width: 100% !important;
+      overflow: inherit !important;
+      opacity: 1 !important;
+      transition: all $animationTime_1 ease !important;
+    }
+  }
+  @include media("<=desktop_small") {
+    padding-right: 0 !important;
+    .detail {
+      padding-top: 45px !important;
+    }
+  }
+  @include media("<=phone") {
+    .background {
+      filter: blur(10px);
+    }
+    .detail {
+      height: 109px !important;
+      padding-top: 0 !important;
+    }
+  }
+  }
+
   .myinfo {
     z-index: 99;
     width: 28%;
@@ -428,66 +467,20 @@
     }
   }
 
-  .showMyWords-active {
-    @include media(">desktop") {
-      width: 100% !important;
-      .background {
-        filter: blur(10px);
-      }
-      .mywords {
-        width: 720px !important;
-        opacity: 1 !important;
-        overflow: inherit !important;
-        transition: width $animationTime_1 ease, opacity $animationTime_2 ease $animationTime_1 !important;
-      }
-    }
-    @include media("<=desktop") {
-      width: 100% !important;
-      height: 100% !important;
-      position: fixed !important;
-      .background {
-        filter: blur(10px);
-      }
-      .mywords {
-        height: 230px !important;
-        width: 100% !important;
-        overflow: inherit !important;
-        opacity: 1 !important;
-        transition: all $animationTime_1 ease !important;
-      }
-    }
-    @include media("<=desktop_small") {
-      .background {
-        filter: blur(10px);
-      }
-      padding-right: 0 !important;
-      .detail {
-        padding-top: 45px !important;
-      }
-    }
-    @include media("<=phone") {
-      .background {
-        filter: blur(10px);
-      }
-      .detail {
-        height: 109px !important;
-        padding-top: 0 !important;
-      }
-    }
-  }
+
 
 </style>
 <script>
     export default {
       data() {
           return {
-            myinfo: 'hello vue',
-            isShowMywords: false
+            myinfo: {}
           };
       },
+      props: ['showMyWords'],
       methods: {
         setMyWordStatus: function () {
-          this.isShowMywords = !this.isShowMywords;
+          this.showMyWords = !this.showMyWords;
         }
       }
     };

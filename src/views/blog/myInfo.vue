@@ -56,6 +56,9 @@
   .showMyWords-active {
   @include media(">desktop") {
     width: 100% !important;
+    .background {
+      filter: blur(10px);
+    }
     .mywords {
       width: 720px !important;
       opacity: 1 !important;
@@ -67,6 +70,9 @@
     width: 100% !important;
     height: 100% !important;
     position: fixed !important;
+    .background {
+      filter: blur(10px);
+    }
     .mywords {
       height: 230px !important;
       width: 100% !important;
@@ -77,6 +83,9 @@
   }
   @include media("<=desktop_small") {
     padding-right: 0 !important;
+    .background {
+      filter: blur(10px);
+    }
     .detail {
       padding-top: 45px !important;
     }

@@ -12,10 +12,13 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import store from './vuex/store';
   import blogNav from 'views/blog/nav.vue';
+  import moment from 'moment';
+  /**
+   * 时间格式化插件-过滤器
+   */
+  moment.locale('zh-cn');
   export default {
-    store,
     data() {
       return {};
     },
@@ -31,6 +34,10 @@
 
 <style lang="scss">
   @import "assets/css/theme.scss";
+
+  @-ms-viewport {
+    width: device-width;
+  }
   /*内容区*/
   .app-content {
     width: 100%;

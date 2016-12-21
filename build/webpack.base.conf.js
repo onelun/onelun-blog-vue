@@ -28,7 +28,8 @@ module.exports = {
       'assets': path.resolve(__dirname, '../src/assets'),
       'components': path.resolve(__dirname, '../src/components'),
       'views': path.resolve(__dirname, '../src/views'),
-      "jquery": path.resolve(__dirname, '../node_modules/jquery/dist/jquery.slim.min.js'),
+      'jquery': path.resolve(__dirname, '../node_modules/jquery/dist/jquery.slim.min.js'),
+      'api': path.resolve(__dirname, '../src/api'),
       //插件位置
       "bootstrap": path.resolve(__dirname, '../src/plugin/bootstrap'),
       "bootstrap-datetimepicker": path.resolve(__dirname, '../src/plugin/bootstrap-datetimepicker')

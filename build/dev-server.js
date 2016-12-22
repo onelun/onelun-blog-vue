@@ -13,8 +13,23 @@ var port = process.env.PORT || config.dev.port
 // Define HTTP proxies to your custom API backend
 // https://github.com/chimurai/http-proxy-middleware
 var proxyTable = config.dev.proxyTable
+//==========================modify by onelun start============================
+//var app = express()
+var AV = require('leanengine');
+var article = require('../routes/Article');
+AV.init({
+  appId: process.env.LEANCLOUD_APP_ID || 'HfD1dEzwoukFqvmNWFYcpBN0-gzGzoHsz',
+  appKey: process.env.LEANCLOUD_APP_KEY || 'gkn9Ym3Rhximmpnrzrzq1J5G',
+  masterKey: process.env.LEANCLOUD_APP_MASTER_KEY || 'kEgzQ5nMqlzGuSmJrRyCOxnI'
+});
 
-var app = express()
+// 如果不希望使用 masterKey 权限，可以将下面一行删除
+AV.Cloud.useMasterKey();
+
+var app = express();
+app.use(AV.express());
+app.use('/api/article', article);
+//============================modify by onelun end==========================
 var compiler = webpack(webpackConfig)
 
 var devMiddleware = require('webpack-dev-middleware')(compiler, {

@@ -43,8 +43,9 @@
   import copyright from 'components/copyright';
   import noData from 'components/nodata';
   import loading from 'components/loading';
-  /* import {getArticleListForFrontEnd} from 'api/article'; */
+  import {getArticleLastList} from 'api/article';
   import Vue from 'vue';
+  import API from '../../config.js';
   Vue.use(InfiniteScroll);
   export default{
     data() {
@@ -64,9 +65,9 @@
       },
       getArticleList: function () {
         console.log('get article list');
-        /* getArticleListForFrontEnd().then(function (results) {
+        getArticleLastList(API.getArticleList).then(function (results) {
           console.log(results);
-        }); */
+        });
       }
     },
     components: {

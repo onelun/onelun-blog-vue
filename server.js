@@ -2,9 +2,9 @@
 var AV = require('leanengine');
 
 AV.init({
-  appId: process.env.LEANCLOUD_APP_ID,
-  appKey: process.env.LEANCLOUD_APP_KEY,
-  masterKey: process.env.LEANCLOUD_APP_MASTER_KEY
+  appId: process.env.LEANCLOUD_APP_ID || 'HfD1dEzwoukFqvmNWFYcpBN0-gzGzoHsz',
+  appKey: process.env.LEANCLOUD_APP_KEY || 'gkn9Ym3Rhximmpnrzrzq1J5G',
+  masterKey: process.env.LEANCLOUD_APP_MASTER_KEY || 'kEgzQ5nMqlzGuSmJrRyCOxnI'
 });
 
 // 如果不希望使用 masterKey 权限，可以将下面一行删除

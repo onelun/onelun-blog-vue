@@ -34,7 +34,7 @@ router.get('/latestList', function(req, res, next) {
         title: 'ARTICLE 列表',
         user: req.currentUser,
         articles: [],
-        status: status,
+        status: -1,
         errMsg: errMsg
       });
     } else {

@@ -12,7 +12,7 @@ if (process.env.NODE_ENV === 'production') {
   };
 } else {
   CONFIG = {
-    url: 'http://127.0.0.1:8050/api',
+    url: '/api',
     // 我的信息_id
     MY_INFO_ID: '57ef5987e1bb0b0b7cbd17e8',
     // 我对对评论进行回复的信息

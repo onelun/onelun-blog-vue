@@ -9,8 +9,15 @@ import 'bootstrap/js/tooltip.js';
 import 'bootstrap/js/modal.js';
 import 'bootstrap/js/transition.js';
 import ua from './plugin/parseUA';
+import VueResource from 'vue-resource';
 Vue.use(VueRouter);
 
+/**
+ * vue-resource 配置
+ */
+Vue.use(VueResource);
+Vue.http.headers.common['Access-Control-Allow-Origin'] = '*';
+Vue.http.headers.common['Content-Type'] = 'application/json; charset=utf-8';
 const router = new VueRouter({
   mode: 'history', // 启用HTML5 history模式
   base: __dirname, // 应用的基路径

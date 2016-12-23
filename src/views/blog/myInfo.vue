@@ -54,53 +54,17 @@
   $animationTime_1: 500ms;
   $animationTime_2: 200ms;
   .showMyWords-active {
-  @include media(">desktop") {
-    width: 100% !important;
-    .background {
-      filter: blur(10px);
-    }
-    .mywords {
-      width: 720px !important;
-      opacity: 1 !important;
-      overflow: inherit !important;
-      transition: width $animationTime_1 ease, opacity $animationTime_2 ease $animationTime_1 !important;
-    }
-  }
-  @include media("<=desktop") {
-    width: 100% !important;
-    height: 100% !important;
-    position: fixed !important;
-    .background {
-      filter: blur(10px);
-    }
-    .mywords {
-      height: 230px !important;
       width: 100% !important;
-      overflow: inherit !important;
-      opacity: 1 !important;
-      transition: all $animationTime_1 ease !important;
-    }
+      .background {
+        filter: blur(10px);
+      }
+      .mywords {
+        width: 720px !important;
+        opacity: 1 !important;
+        overflow: inherit !important;
+        transition: width $animationTime_1 ease, opacity $animationTime_2 ease $animationTime_1 !important;
+      }
   }
-  @include media("<=desktop_small") {
-    padding-right: 0 !important;
-    .background {
-      filter: blur(10px);
-    }
-    .detail {
-      padding-top: 45px !important;
-    }
-  }
-  @include media("<=phone") {
-    .background {
-      filter: blur(10px);
-    }
-    .detail {
-      height: 109px !important;
-      padding-top: 0 !important;
-    }
-  }
-  }
-
   .myinfo {
     z-index: 99;
     width: 28%;
@@ -110,6 +74,7 @@
     align-items: center;
     flex-direction: row;
     position: fixed;
+    transition: width ease $animationTime_1;
     padding-left: 45px;
     color: #fff;
     .text-shadow {
@@ -125,7 +90,17 @@
     }
     .detail {
       box-sizing: content-box;
+      width: 350px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       .detail-1 {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-bottom:15px;
         .detail-img-box {
           width: 160px;
           height: 160px;
@@ -206,13 +181,22 @@
         }
       }
       .detail-2 {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
         .detail-sns {
+          width: 265px;
+          margin-top:10px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
           .github {
             background: #38b7ea;
             color: #fff;
             text-decoration: none;
             width: 160px;
-            background: #38b7ea;
             color: #fff;
             border-radius: 20px;
             text-decoration: none;
@@ -223,14 +207,15 @@
             display: block;
             cursor: pointer;
             text-align: center;
-          a {
-            color: inherit;
-          }
-          &:hover {
-             text-decoration: none;
-             background: #49c8fb !important;
-             color: #fff;
-           }
+            margin: 0 auto 15px;
+            a {
+              color: inherit;
+            }
+            &:hover {
+               text-decoration: none;
+               background: #49c8fb !important;
+               color: #fff;
+            }
           }
           .sns {
             margin: 0;
@@ -240,6 +225,7 @@
             width: 100%;
             justify-content: center;
             align-items: center;
+            padding: 0;
             & > li {
               margin: 0 8px;
               cursor: pointer;
@@ -256,10 +242,11 @@
       }
     }
     .mywords {
+      width: 0;
       align-items: center;
       transform: translate3d(0, 0, 0);
       display: flex;
-      justify-content: center;
+      justify-content: flex-start;
       overflow: visible;
       text-align: left;
       font-size: 24px;
@@ -270,223 +257,24 @@
       -webkit-user-select: none;
       position: relative;
       box-sizing: border-box;
-    }
-  }
-
-  @include media(">desktop") {
-    .myinfo {
-      width: 28%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: row;
-      position: fixed;
-      transition: width ease $animationTime_1;
-      padding-left: 45px;
-      .detail {
-        width: 350px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        .detail-1 {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          margin-bottom:15px;
-          .detail-img-box {
-            width: 100%;
-          }
-          .detail-info {
-            width: 100%;
-          }
-        }
-        .detail-2 {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          .detail-sns {
-            width: 265px;
-            margin-top:10px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            .github {
-              margin: 0 auto 15px;
-            }
-            .sns {
-              padding: 0;
-            }
-          }
-        }
-      }
-      .mywords {
-        width: 0;
-        justify-content: flex-start;
-        align-items: center;
-        opacity: 0;
-        transition: width $animationTime_1 ease, opacity $animationTime_2 ease;
-      }
-    }
-  }
-
-  @include media("<=desktop") {
-    .myinfo {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      position: absolute;
-      transition: height ease $animationTime_1;
-      .detail {
-        width: 720px;
-        min-height: 270px;
-        display: flex;
-        flex-direction: column;
-        flex-wrap: nowrap;
-        justify-content: center;
-        align-items: center;
-        .detail-1 {
-          display: flex;
-          flex-direction: row;
-          justify-content: center;
-          align-items: center;
-          .detail-img-box {
-            width: 225px;
-          }
-          .detail-info {
-            width: 265px;
-          }
-        }
-        .detail-2 {
-          display: flex;
-          flex-direction: row;
-          justify-content: center;
-          align-items: center;
-          margin: 20px 0 0;
-          .detail-sns {
-            display: flex;
-            flex-direction: row;
-            width: 265px;
-            justify-content: center;
-            align-items: center;
-            .github {
-              margin: 0;
-              display: none;
-            }
-            .sns {
-              padding: 0;
-            }
-          }
-        }
-      }
-      .mywords {
-        align-items: flex-start;
-        justify-content: flex-start;
-        height: 0;
-        overflow: hidden;
-        width: 720px;
-        opacity: 0;
-        transition: height $animationTime_1 ease, opacity $animationTime_2 ease;
-      }
-    }
-  }
-  @include media(">desktop_small", "<=desktop") {
-    .myinfo {
-      height: 270px;
+      opacity: 0;
+      transition: width $animationTime_1 ease, opacity $animationTime_2 ease;
     }
   }
   @include media("<=desktop_small") {
     .myinfo {
-      height: 315px;
-      .detail {
-        padding: 45px 0 0 0;
-        transition: all ease 500ms;
-      }
-      .mywords {
-        padding: 0px 40px !important;
-      }
+      display: none;
     }
   }
-
-  @include media("<=phone") {
-    .myinfo {
-      justify-content: center;
-      height: 190px;
-      .detail {
-        height: 145px;
-        width:100%;
-        min-height: inherit;
-        transition: all ease 500ms;
-        .detail-1 {
-          margin: 5px 0;
-          flex-direction: row;
-          .detail-img-box {
-            margin: 0 5px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            .img-box {
-              width: 70px;
-              height: 70px;
-              &:hover {
-                &:after {
-                   opacity: 0;
-                }
-              }
-            }
-            width: 80px;
-            height: 80px;
-          }
-          .detail-info {
-            margin: 0 5px;
-            width: auto;
-            .name {
-              margin: 10px 0;
-              font-size: 24px;
-            }
-            .job {
-              margin: 10px 0;
-              font-size: 12px;
-            }
-          }
-        }
-        .detail-2 {
-          margin: 5px 0;
-        }
-      }
-      .mywords {
-        width: 100%;
-        font-size: 16px;
-        padding: 0 20px !important;
-        text-align: center;
-        p {
-          margin: 0 !important;
-        }
-        article {
-          margin: 10px 0;
-        }
-      }
-    }
-  }
-
-
-
 </style>
 <script>
     export default {
       data() {
           return {
-            myinfo: {}
+            myinfo: {},
+            showMyWords: false
           };
       },
-      props: ['showMyWords'],
       methods: {
         setMyWordStatus: function () {
           this.showMyWords = !this.showMyWords;

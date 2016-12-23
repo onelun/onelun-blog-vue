@@ -12,12 +12,16 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import Vue from 'vue';
   import blogNav from 'views/blog/nav.vue';
+  import vueMoment from 'vue-moment';
   import moment from 'moment';
   /**
    * 时间格式化插件-过滤器
    */
   moment.locale('zh-cn');
+  Vue.use(vueMoment);
+
   export default {
     data() {
       return {};

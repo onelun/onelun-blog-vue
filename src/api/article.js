@@ -9,23 +9,21 @@ import Vue from 'vue';
 // 获取文章列表-for 最近更新
 export const getArticleLastList = function (url) {
   return new Promise(function (resolve, reject) {
-    console.log(url);
-    var tmp = Vue.$sessionStorage[url];
+    /* var tmp = window.sessionStorage.articleLastList;
     console.log(tmp);
     if (tmp) {
       console.log('文章列表数据使用缓存!');
       resolve(tmp);
       return;
-    }
-    Vue.http.get(url).then((response) => {
+    } */
+    Vue.http.get(url, {params: { status: 1, errMsg: '获取最新文章失败' }}).then((response) => {
       // success callback
-      console.log(response);
       let result = response.data;
-      if (parseInt(result.code) === 1) {
-        resolve(result.data);
-        Vue.$sessionStorage.$set(url, result.data);
+      if (parseInt(result.status) === 1) {
+        resolve(result);
+        // Vue.$sessionStorage.$set(url, result.data);
       } else {
-        reject(parseInt(result.code));
+        reject(parseInt(result.status));
       }
     }, () => {
       reject(API.SYS_ERR);

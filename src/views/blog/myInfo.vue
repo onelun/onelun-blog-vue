@@ -44,7 +44,7 @@
         <p class="text-shadow">人生，少年，中年，老年，就如喝茶的三个阶段。头遍苦涩，正如初入社会磕绊坎坷。二遍舌底生津，在拼搏后收获财富，稳重和信心。
           第三遍茶已逐渐淡去，犹如年纪渐大，耳顺易平心静，经过时光的洗练，心中一片清澈，诚如茶之味淡，茶水愈加透明。</p>
       </section>
-      <div class="background">
+      <div class="background" :class="{'blur': showMyWords}">
         <img src="../../assets/images/myinfo.jpg" width="100%" height="100%">
       </div>
     </div>

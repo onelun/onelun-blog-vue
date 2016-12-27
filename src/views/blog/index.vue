@@ -29,7 +29,7 @@
           <copyright></copyright>
         </section>
       </div>
-      <div class="background">
+      <div class="background blur">
         <img src="../../assets/images/myinfo.jpg" width="100%" height="100%">
       </div>
     </div>

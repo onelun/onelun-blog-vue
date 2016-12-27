@@ -38,7 +38,7 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    component: { template: '<div>This is login</div>' }
+    component: require('./views/blog/login.vue')
   }
 ];
 module.exports = routes;

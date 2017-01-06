@@ -17,6 +17,7 @@ var proxyTable = config.dev.proxyTable
 //var app = express()
 var AV = require('leanengine');
 var article = require('../routes/Article');
+var user = require('../routes/User');
 AV.init({
   appId: process.env.LEANCLOUD_APP_ID || 'HfD1dEzwoukFqvmNWFYcpBN0-gzGzoHsz',
   appKey: process.env.LEANCLOUD_APP_KEY || 'gkn9Ym3Rhximmpnrzrzq1J5G',
@@ -29,6 +30,7 @@ AV.Cloud.useMasterKey();
 var app = express();
 app.use(AV.express());
 app.use('/api/article', article);
+app.use('/api/user', user);
 //============================modify by onelun end==========================
 var compiler = webpack(webpackConfig)
 

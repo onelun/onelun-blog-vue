@@ -10,8 +10,8 @@ import 'bootstrap/js/modal.js';
 import 'bootstrap/js/transition.js';
 import ua from './plugin/parseUA';
 import VueResource from 'vue-resource';
+import 'mint-ui/lib/style.css';
 Vue.use(VueRouter);
-
 /**
  * vue-resource 配置
  */

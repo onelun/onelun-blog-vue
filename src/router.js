@@ -36,9 +36,27 @@ const routes = [
     component: require('./views/blog/music.vue')
   },
   {
-    path: '/login',
-    name: 'login',
-    component: require('./views/blog/login.vue')
+    path: '/user',
+    name: 'user',
+    component: require('./views/blog/user.vue'),
+    redirect: {
+      name: 'login',
+      query: {
+        userType: 'login'
+      }
+    },
+    children: [
+      {
+        path: 'login',
+        name: 'login',
+        component: require('./views/blog/login.vue')
+      },
+      {
+        path: 'register',
+        name: 'register',
+        component: require('./views/blog/register.vue')
+      }
+    ]
   }
 ];
 module.exports = routes;

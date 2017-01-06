@@ -4,33 +4,24 @@
       <div class="form-group">
         <div class="col-sm-12">
           <input autofocus v-on:keydown="errText=''" class="form-control" id="username"
-                 type="text" name="username" v-model="username" placeholder="手机或邮箱">
+                 type="text" name="username" v-model="username" placeholder="姓名">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-12">
+          <input autofocus v-on:keydown="errText=''" class="form-control" id="phone"
+                 type="text" name="phone" v-model="phone" placeholder="手机号（仅支持中国大陆）">
         </div>
       </div>
       <div class="form-group">
         <div class="col-sm-12">
           <input v-on:keydown="errText=''" class="form-control" id="password"
-                 type="password" name="password" v-model="password" placeholder="密码">
+                 type="password" name="password" v-model="password" placeholder="密码（不少于6位）">
         </div>
       </div>
       <div class="btnGroup">
         <span class="errText">{{errText}}</span>
-        <button @click="loginBtn()" class="btn btn-x-songtao">登录</button>
-      </div>
-    </div>
-    <div class="login-token">
-      <div class="login-sns">
-        <ul class="sns">
-          <li><a title="GitHub" target="_blank" href="https://github.com/onelun">
-              <i class="fa fa-github"></i>
-            </a>
-          </li>
-          <li><a title="QQ" target="_blank" href="#"><i class="fa fa-qq"></i></a></li>
-          <li><a title="微信" target="_blank" href="#"><i class="fa fa-weixin"></i></a></li>
-          <li><a title="新浪微博" target="_blank" href="#"><i class="fa fa-weibo"></i></a></li>
-          <li><a title="腾讯微博" target="_blank" href="#"><i class="fa fa-tencent-weibo"></i></a>
-          </li>
-        </ul>
+        <button @click="registerBtn()" class="btn btn-register">注册</button>
       </div>
     </div>
   </div>
@@ -44,7 +35,7 @@
         margin-right: 10px;
 
       }
-      .btn-x-songtao {
+      .btn-register {
         width: 100px;
         background-color: $base-theme-color;
         color: #fff;
@@ -54,50 +45,19 @@
         }
       }
     }
-    .login-token {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      .login-sns {
-        width: 265px;
-        margin-top:10px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        .sns {
-          margin: 0;
-          list-style: none;
-          display: flex;
-          font-size: 20px;
-          width: 100%;
-          justify-content: center;
-          align-items: center;
-          padding: 0;
-          & > li {
-            margin: 0 8px;
-            cursor: pointer;
-            a {
-              color: white;
-              &:hover {
-                 color: #49c8fb;
-              }
-            }
-
-          }
-        }
-      }
-    }
   }
 </style>
 <script type="text/ecmascript-6">
     import {mapState, mapActions} from 'vuex';
+    import {register} from 'api/user';
+    import API from '../../config.js';
+    import { Toast } from 'mint-ui';
     export default {
       data() {
         return {
           username: '',
           password: '',
+          phone: '',
           errText: ''
         };
       },
@@ -111,7 +71,7 @@
           setLoginState: 'setLoginState',
           setCommentInfoStatus: 'setCommentInfoStatus'
         }),
-        loginBtn: function () {
+        registerBtn: function () {
           const _this = this;
           if (!_this.username) {
             _this.errText = '请输入用户名！';
@@ -121,7 +81,22 @@
             _this.errText = '请输入密码';
             return;
           }
+          if (!_this.phone) {
+            _this.phone = '请输入手机号';
+            return;
+          }
           // TODO 登陆逻辑
+          let params = {'username': _this.username, 'password': _this.password, 'phone': _this.phone};
+          console.log(params);
+          register(API.register, params).then(function (results) {
+            console.log(results);
+            Toast({
+              message: '注册成功',
+              position: 'bottom'
+            });
+          }, function () {
+            _this.hasData = false;
+          });
         }
       },
       components: {

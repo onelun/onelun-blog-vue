@@ -53,5 +53,6 @@ module.exports = {
   ArticleFrom: '0',
   ArticleNum: '10',
   // 获取文章列表
-  getArticleList: `${url}/article/latestList`
+  getArticleList: `${url}/article/latestList`,
+  register: `${url}/user/register`
 };

@@ -26,7 +26,7 @@
          data-placement="right" title="退出" @click="doLoginout()">
         <i class="fa fa-sign-out fa-lg"></i>
       </a>
-      <router-link v-show="!isLogin" class="nav-item hidden-xs" activeClass="active" :to="{ name: 'login'}"
+      <router-link v-show="!isLogin" class="nav-item hidden-xs" activeClass="active" :to="{ name: 'user'}"
                    data-toggle="tooltip" data-placement="right" title="登录">
         <i class="fa fa-sign-in fa-lg"></i>
       </router-link>

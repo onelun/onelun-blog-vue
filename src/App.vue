@@ -16,6 +16,7 @@
   import blogNav from 'views/blog/nav.vue';
   import vueMoment from 'vue-moment';
   import moment from 'moment';
+  import store from './vuex/store';
   /**
    * 时间格式化插件-过滤器
    */
@@ -23,6 +24,7 @@
   Vue.use(vueMoment);
 
   export default {
+    store,
     data() {
       return {};
     },

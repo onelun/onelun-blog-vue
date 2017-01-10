@@ -135,12 +135,17 @@
   }
 </style>
 <script type="text/ecmascript-6">
+  import {mapState} from 'vuex';
   export default{
     data() {
       return {
-        isLogin: false,
         isMobile: true
       };
+    },
+    computed: {
+      ...mapState({
+        isLogin: 'isLogin'
+      }),
     },
     methods: {
       navBack: function () {

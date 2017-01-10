@@ -93,6 +93,8 @@
 </style>
 <script type="text/ecmascript-6">
     import {mapState, mapActions} from 'vuex';
+    import { login } from 'api/user';
+    import { Toast } from 'mint-ui';
     export default {
       data() {
         return {
@@ -108,8 +110,7 @@
       },
       methods: {
         ...mapActions({
-          setLoginState: 'setLoginState',
-          setCommentInfoStatus: 'setCommentInfoStatus'
+          setLoginState: 'setLoginState'
         }),
         loginBtn: function () {
           const _this = this;
@@ -122,10 +123,19 @@
             return;
           }
           // TODO 登陆逻辑
+          let params = {'username': _this.username, 'password': _this.password};
+          login(params).then((result) => {
+            _this.setLoginState(true); // 设置全局登录状态
+            _this.$router.replace({ // 跳转
+              name: 'index'
+            });
+          }, (error) => {
+            Toast({
+              message: error.message,
+              position: 'bottom'
+            });
+          });
         }
-      },
-      components: {
-
       }
     };
 </script>

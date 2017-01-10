@@ -6,19 +6,10 @@ import API from '../config.js';
 import Vue from 'vue';
 /* import { doError } from './doError'; */
 
-// 获取文章列表-for 最近更新
-export const register = function (url, params) {
+// 注册
+export const register = function (params) {
   return new Promise(function (resolve, reject) {
-    /* var tmp = window.sessionStorage.articleLastList;
-     console.log(tmp);
-     if (tmp) {
-     console.log('文章列表数据使用缓存!');
-     resolve(tmp);
-     return;
-     } */
-    params['status'] = 1;
-    params['errMsg'] = '注册失败';
-    Vue.http.get(url, {params: params}).then((response) => {
+    Vue.http.get(API.register, {params: params}).then((response) => {
       // success callback
       let result = response.data;
       if (parseInt(result.status) === 1) {
@@ -27,7 +18,25 @@ export const register = function (url, params) {
       } else {
         reject(parseInt(result.status));
       }
-    }, () => {
+    }, (error) => {
+      console.error(error);
+      reject(API.SYS_ERR);
+    });
+  });
+};
+// 登录
+export const login = function (params) {
+  return new Promise(function (resolve, reject) {
+    Vue.http.get(API.login, {params: params}).then((response) => {
+      // success callback
+      let result = response.data;
+      if (parseInt(result.status) === 1) {
+        resolve(result);
+      } else {
+        reject(result);
+      }
+    }, (error) => {
+      console.error(error);
       reject(API.SYS_ERR);
     });
   });

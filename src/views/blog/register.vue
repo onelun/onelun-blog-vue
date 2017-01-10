@@ -50,7 +50,6 @@
 <script type="text/ecmascript-6">
     import {mapState, mapActions} from 'vuex';
     import {register} from 'api/user';
-    import API from '../../config.js';
     import { Toast } from 'mint-ui';
     export default {
       data() {
@@ -85,22 +84,20 @@
             _this.phone = '请输入手机号';
             return;
           }
-          // TODO 登陆逻辑
           let params = {'username': _this.username, 'password': _this.password, 'phone': _this.phone};
-          console.log(params);
-          register(API.register, params).then(function (results) {
-            console.log(results);
+          register(params).then(function (result) {
+            console.log(result);
             Toast({
-              message: '注册成功',
+              message: result.message,
               position: 'bottom'
             });
-          }, function () {
-            _this.hasData = false;
+          }, function (error) {
+            Toast({
+              message: error.message,
+              position: 'bottom'
+            });
           });
         }
-      },
-      components: {
-
       }
     };
 </script>

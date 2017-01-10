@@ -28,13 +28,13 @@ const MY_INFO_ID = CONFIG.MY_INFO_ID;
 // 我对对评论进行回复的信息
 const MY = CONFIG.MY;
 const EMAIL = CONFIG.EMAIL;
-
+const BASE_RESULT = {}
 module.exports = {
   /**
    * 通用状态码
    * */
 
-  SYS_ERR: 'SYS_ERR', // api请求系统错误
+  SYS_ERR: { message: '系统需要休息！', code: -2, data: {} }, // api请求系统错误
 
   /**
    * 用户、登录相关

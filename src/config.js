@@ -46,12 +46,9 @@ module.exports = {
   login: `${url}/api/login`,
   doLogin: `${url}/api/do_login`,
 
-  /**
-   * 文章相关
-   * */
-  // 获取最新的十条文章
-  ArticleFrom: '0',
-  ArticleNum: '10',
+  // 分页
+  pageIndex: '1',
+  pageSize: '10',
   // 获取文章列表
   getArticleList: `${url}/article/latestList`,
   register: `${url}/user/register`

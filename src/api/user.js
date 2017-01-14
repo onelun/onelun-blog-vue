@@ -12,11 +12,11 @@ export const register = function (params) {
     Vue.http.get(API.register, {params: params}).then((response) => {
       // success callback
       let result = response.data;
-      if (parseInt(result.status) === 1) {
+      if (parseInt(result.code) === 1) {
         resolve(result);
         // Vue.$sessionStorage.$set(url, result.data);
       } else {
-        reject(parseInt(result.status));
+        reject(parseInt(result.code));
       }
     }, (error) => {
       console.error(error);
@@ -30,7 +30,7 @@ export const login = function (params) {
     Vue.http.get(API.login, {params: params}).then((response) => {
       // success callback
       let result = response.data;
-      if (parseInt(result.status) === 1) {
+      if (parseInt(result.code) === 1) {
         resolve(result);
       } else {
         reject(result);

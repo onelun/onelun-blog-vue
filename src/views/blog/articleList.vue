@@ -66,7 +66,7 @@
       },
       getArticleList: function () {
         let _this = this;
-        getArticleLastList(API.getArticleList).then(function (results) {
+        getArticleLastList({pageIndex: API.pageIndex, pageSize: API.pageSize}).then(function (results) {
           let articles = results.articles;
           _this.articleList = _this.articleList.concat(articles);
           console.log(_this.articleList);

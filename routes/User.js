@@ -29,24 +29,16 @@ router.get('/register', function(req, res, next) {
   });
 });
 router.get('/login', function(req, res, next) {
-  // 新建 AVUser 对象实例
-  var user = new AV.User();
-  // 设置用户名
-  user.setUsername(req.query.username);
-  // 设置密码
-  user.setPassword(req.query.password);
-  // 设置邮箱
-  user.setMobilePhoneNumber(req.query.phone);
-  console.log(user);
-  user.signUp().then((registerUser) => {
-    console.log(registerUser);
+  AV.User.logIn(req.query.username, req.query.password).then(function (loginedUser) {
+    console.log(loginedUser);
     result = result.SUCCESS_RESULT;
-    result.data = registerUser;
-    result.messages = '注册成功';
+    result.data = loginedUser;
+    result.messages = '登录成功';
     res.json(result);
   }, function (error) {
+    console.error(error);
     result = result.ERROR_RESULT;
-    result.messages = '注册失败';
+    result.messages = '登录失败,失败原因:'+error.message;
     res.json(result);
   });
 });

@@ -92,6 +92,7 @@
   }
 </style>
 <script type="text/ecmascript-6">
+    import Vue from 'vue';
     import {mapState, mapActions} from 'vuex';
     import { login } from 'api/user';
     import { Toast } from 'mint-ui';
@@ -122,9 +123,15 @@
             _this.errText = '请输入密码';
             return;
           }
-          // TODO 登陆逻辑
           let params = {'username': _this.username, 'password': _this.password};
           login(params).then((result) => {
+            // 设置登录状态信息
+            _this.$localStorage.$set('authorization', {
+              token: result.data.objectId,
+              time: new Date().getTime()
+            });
+            // 设置请求的token
+            Vue.http.headers.common['authorization'] = 'token ' + result.data.objectId;
             _this.setLoginState(true); // 设置全局登录状态
             _this.$router.replace({ // 跳转
               name: 'index'

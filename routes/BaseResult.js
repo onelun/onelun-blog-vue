@@ -17,5 +17,10 @@ module.exports = {
     message: '操作失败',
     code: -1,
     data: {}
+  },
+  QUERY_RESULT: {
+    message: '查询成功',
+    code: 1,
+    datas: []
   }
 }

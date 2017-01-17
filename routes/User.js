@@ -6,6 +6,8 @@ var express = require('express');
 var router = express.Router();
 var AV = require('leanengine');
 var result = require('./BaseResult');
+var baseResult = result.BASE_RESULT;
+var errorResult = result.ERROR_RESULT;
 router.get('/register', function(req, res, next) {
   // 新建 AVUser 对象实例
   var user = new AV.User();
@@ -18,10 +20,9 @@ router.get('/register', function(req, res, next) {
   console.log(user);
   user.signUp().then((registerUser) => {
     console.log(registerUser);
-    result = result.SUCCESS_RESULT;
-    result.data = registerUser;
-    result.messages = '注册成功';
-    res.json(result);
+    baseResult.data = registerUser;
+    baseResult.messages = '注册成功';
+    res.json(baseResult);
   }, function (error) {
     result = result.ERROR_RESULT;
     result.messages = '注册失败';
@@ -30,16 +31,14 @@ router.get('/register', function(req, res, next) {
 });
 router.get('/login', function(req, res, next) {
   AV.User.logIn(req.query.username, req.query.password).then(function (loginedUser) {
-    console.log(loginedUser);
     result = result.SUCCESS_RESULT;
     result.data = loginedUser;
     result.messages = '登录成功';
     res.json(result);
   }, function (error) {
     console.error(error);
-    result = result.ERROR_RESULT;
-    result.messages = '登录失败,失败原因:'+error.message;
-    res.json(result);
+    errorResult.messages = '登录失败,失败原因:'+error.message;
+    res.json(errorResult);
   });
 });
 module.exports = router;

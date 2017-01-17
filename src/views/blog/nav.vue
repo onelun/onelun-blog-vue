@@ -145,7 +145,7 @@
     computed: {
       ...mapState({
         isLogin: 'isLogin'
-      }),
+      })
     },
     methods: {
       navBack: function () {

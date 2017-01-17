@@ -54,7 +54,7 @@
         isLoading: true, // 加载提示
         articleList: [],
         hasData: true, // 是否有数据提示
-        pageNow: 0,
+        pageIndex: 1,
         infiniteDisabled: false // 是否禁用无限加载
       };
     },
@@ -66,12 +66,12 @@
       },
       getArticleList: function () {
         let _this = this;
-        getArticleLastList({pageIndex: API.pageIndex, pageSize: API.pageSize}).then(function (results) {
-          let articles = results.articles;
+        getArticleLastList({pageIndex: _this.pageIndex || API.pageIndex, pageSize: API.pageSize}).then(function (results) {
+          let articles = results.datas;
           _this.articleList = _this.articleList.concat(articles);
           console.log(_this.articleList);
-          _this.pageNow += parseInt(API.ArticleNum);
-          if (articles.length === API.ArticleNum) {
+          _this.pageIndex += parseInt(API.pageIndex);
+          if (articles.length === API.pageIndex) {
             _this.infiniteDisabled = false;
           } else {
             _this.infiniteDisabled = true;

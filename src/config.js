@@ -28,7 +28,6 @@ const MY_INFO_ID = CONFIG.MY_INFO_ID;
 // 我对对评论进行回复的信息
 const MY = CONFIG.MY;
 const EMAIL = CONFIG.EMAIL;
-const BASE_RESULT = {}
 module.exports = {
   /**
    * 通用状态码
@@ -42,14 +41,13 @@ module.exports = {
   MY_INFO_ID: MY_INFO_ID,
   MY: MY,
   EMAIL: EMAIL,
-  // 登录
-  login: `${url}/api/login`,
-  doLogin: `${url}/api/do_login`,
 
   // 分页
   pageIndex: '1',
   pageSize: '10',
   // 获取文章列表
   getArticleList: `${url}/article/latestList`,
-  register: `${url}/user/register`
+  // 注册&登录
+  register: `${url}/user/register`,
+  login: `${url}/user/login`
 };

@@ -1,7 +1,8 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
-import VueRouter from 'vue-router';
+import router from './router.js';
+// import VueRouter from 'vue-router';
 import App from './App.vue';
 import 'assets/css/util.scss';
 import 'bootstrap/scss/bootstrap.slim.scss';
@@ -11,18 +12,18 @@ import 'bootstrap/js/transition.js';
 import ua from './plugin/parseUA';
 import VueResource from 'vue-resource';
 import 'mint-ui/lib/style.css';
-Vue.use(VueRouter);
+// Vue.use(VueRouter);
 /**
  * vue-resource 配置
  */
 Vue.use(VueResource);
 Vue.http.headers.common['Access-Control-Allow-Origin'] = '*';
 Vue.http.headers.common['Content-Type'] = 'application/json; charset=utf-8';
-const router = new VueRouter({
+/* const router = new VueRouter({
   mode: 'history', // 启用HTML5 history模式
   base: __dirname, // 应用的基路径
   routes: require('./router')
-});
+}); */
 /**
  * $router全局化，便于外部js调用
  * @type {VueRouter}

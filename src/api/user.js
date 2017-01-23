@@ -30,6 +30,7 @@ export const login = function (params) {
     Vue.http.get(API.login, {params: params}).then((response) => {
       // success callback
       let result = response.data;
+      console.log(result);
       if (parseInt(result.code) === 1) {
         resolve(result);
       } else {

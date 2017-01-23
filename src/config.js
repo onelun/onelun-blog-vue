@@ -49,5 +49,10 @@ module.exports = {
   getArticleList: `${url}/article/latestList`,
   // 注册&登录
   register: `${url}/user/register`,
-  login: `${url}/user/login`
+  login: `${url}/user/login`,
+  // tag标签
+  addTag: `${url}/tag/addTag`,
+  getTagList: `${url}/tag/getTagList`,
+  editTag: `${url}/tag/editTag`,
+  deleteTag: `${url}/tag/deleteTag`
 };

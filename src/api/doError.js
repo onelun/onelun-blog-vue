@@ -4,45 +4,33 @@
  * 统一的错误处理方法: 8-数据库查找错误；9-非admin用户；10-token错误或超时（（Token 2h内有效）
  * 其余由api自己处理: 2~5-失败；
  */
-import Toast from 'Toast';
+import API from '../config.js';
+import { Toast } from 'mint-ui';
 
-export const doError = function (code) {
-  code = parseInt(code);
+export const doError = function (result) {
+  let code = parseInt(result.code);
   switch (code) {
-    case 8:
-      window.$router.back();
+    case -505:
       Toast({
-        message: '数据库查找错误!',
-        iconClass: 'fa fa-warning',
-        position: 'center',
-        duration: 3000
+        message: '服务器异常，请稍后再试!',
+        position: 'bottom'
       });
       break;
-    case 9:
-      Toast({
-        message: '您没有操作权限!',
-        iconClass: 'fa fa-warning',
-        position: 'center',
-        duration: 3000
-      });
-      break;
-    case 10:
+    case -200:
       Toast({
         message: 'Token超时,请再登陆!',
-        iconClass: 'fa fa-warning',
-        position: 'center',
-        duration: 3000
+        position: 'bottom'
       });
-      // 清空本地数据
-      // Vue.$localStorage.$delete('authorization');
-      // Vue.$localStorage.$delete('commentInfo');
-      // 跳转
       window.$router.replace({
-        name: 'login'
+        name: 'user'
       });
       break;
     default:
+      Toast({
+        message: result.message || API.SYS_ERR.message,
+        position: 'bottom'
+      });
       break;
   }
-  return code;
+  return result;
 };

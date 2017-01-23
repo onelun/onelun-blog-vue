@@ -15,9 +15,12 @@ var port = process.env.PORT || config.dev.port
 var proxyTable = config.dev.proxyTable
 //==========================modify by onelun start============================
 //var app = express()
+var bodyParser = require('body-parser');
+
 var AV = require('leanengine');
 var article = require('../routes/Article');
 var user = require('../routes/User');
+var tag = require('../routes/Tag');
 AV.init({
   appId: process.env.LEANCLOUD_APP_ID || 'HfD1dEzwoukFqvmNWFYcpBN0-gzGzoHsz',
   appKey: process.env.LEANCLOUD_APP_KEY || 'gkn9Ym3Rhximmpnrzrzq1J5G',
@@ -28,9 +31,12 @@ AV.init({
 AV.Cloud.useMasterKey();
 
 var app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(AV.express());
 app.use('/api/article', article);
 app.use('/api/user', user);
+app.use('/api/tag', tag);
 //============================modify by onelun end==========================
 var compiler = webpack(webpackConfig)
 

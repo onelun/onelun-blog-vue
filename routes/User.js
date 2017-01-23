@@ -7,6 +7,7 @@ var router = express.Router();
 var AV = require('leanengine');
 var result = require('./BaseResult');
 var baseResult = result.BASE_RESULT;
+var successResult = result.SUCCESS_RESULT;
 var errorResult = result.ERROR_RESULT;
 router.get('/register', function(req, res, next) {
   // 新建 AVUser 对象实例
@@ -31,10 +32,9 @@ router.get('/register', function(req, res, next) {
 });
 router.get('/login', function(req, res, next) {
   AV.User.logIn(req.query.username, req.query.password).then(function (loginedUser) {
-    result = result.SUCCESS_RESULT;
-    result.data = loginedUser;
-    result.messages = '登录成功';
-    res.json(result);
+    successResult.data = loginedUser;
+    successResult.messages = '登录成功';
+    res.json(successResult);
   }, function (error) {
     console.error(error);
     errorResult.messages = '登录失败,失败原因:'+error.message;

@@ -44,7 +44,7 @@
         <p class="text-shadow">人生，少年，中年，老年，就如喝茶的三个阶段。头遍苦涩，正如初入社会磕绊坎坷。二遍舌底生津，在拼搏后收获财富，稳重和信心。
           第三遍茶已逐渐淡去，犹如年纪渐大，耳顺易平心静，经过时光的洗练，心中一片清澈，诚如茶之味淡，茶水愈加透明。</p>
       </section>
-      <div class="background" :class="{'blur': showMyWords}">
+      <div class="myinfo-background" :class="{'blur': showMyWords}">
         <img src="../../assets/images/myinfo.jpg" width="100%" height="100%">
       </div>
     </div>
@@ -53,18 +53,6 @@
   @import "../../assets/css/theme.scss";
   $animationTime_1: 500ms;
   $animationTime_2: 200ms;
-  .showMyWords-active {
-      width: 100% !important;
-      .background {
-        filter: blur(10px);
-      }
-      .mywords {
-        width: 720px !important;
-        opacity: 1 !important;
-        overflow: inherit !important;
-        transition: width $animationTime_1 ease, opacity $animationTime_2 ease $animationTime_1 !important;
-      }
-  }
   .myinfo {
     z-index: 99;
     width: 28%;
@@ -80,7 +68,7 @@
     .text-shadow {
       text-shadow: -1px 0 0 rgba(0,0,0,0.75);
     }
-    .background {
+    .myinfo-background {
       position: absolute;
       top: 0;
       left: 0;
@@ -259,6 +247,15 @@
       box-sizing: border-box;
       opacity: 0;
       transition: width $animationTime_1 ease, opacity $animationTime_2 ease;
+    }
+  }
+  .showMyWords-active {
+    width: 100% !important;
+    .mywords {
+      width: 720px !important;
+      opacity: 1 !important;
+      overflow: inherit !important;
+      transition: width $animationTime_1 ease, opacity $animationTime_2 ease $animationTime_1 !important;
     }
   }
   @include media("<=desktop_small") {

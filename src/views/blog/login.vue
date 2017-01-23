@@ -124,7 +124,7 @@
             return;
           }
           let params = {'username': _this.username, 'password': _this.password};
-          login(params).then((result) => {
+          login(params).then(function(result) {
             // 设置登录状态信息
             _this.$localStorage.$set('authorization', {
               token: result.data.objectId,
@@ -136,7 +136,8 @@
             _this.$router.replace({ // 跳转
               name: 'index'
             });
-          }, (error) => {
+          }, function(error) {
+            console.error(error);
             Toast({
               message: error.message,
               position: 'bottom'

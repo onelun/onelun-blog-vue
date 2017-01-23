@@ -29,9 +29,6 @@
           <copyright></copyright>
         </section>
       </div>
-      <div class="background blur">
-        <img src="../../assets/images/myinfo.jpg" width="100%" height="100%">
-      </div>
     </div>
 </template>
 <style lang="scss">
@@ -51,7 +48,6 @@
       left: 0;
       color: #fff;
       overflow: hidden;
-      background: transparent radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 100%);
       box-sizing: border-box;
       .head-wrap {
         width: 100%;
@@ -108,16 +104,6 @@
         }
       }
     }
-    .background {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      filter: blur(10px);
-    }
-
     .index-btnBox {
       user-select: none;
       -webkit-user-select: none;

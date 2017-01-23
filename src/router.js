@@ -61,7 +61,47 @@ const routes = [
         component: require('./views/blog/register.vue')
       }
     ]
+  },
+  {
+    path: '/admin',
+    name: 'admin',
+    component: function (resolve) {
+      require(['./views/admin/index.vue'], resolve);
+    },
+    meta: {requiresAuth: true},
+    children: [
+      {
+        path: 'admin-tag',
+        name: 'admin-tag',
+        component: function (resolve) {
+          require(['./views/admin/tagList.vue'], resolve);
+        },
+        meta: {requiresAuth: true}
+      }
+    ]
   }
+
+  /* ,
+  {
+    path: 'admin-articleManager',
+    name: 'admin-articleManager',
+    redirect: {
+      name: 'admin-articleList'
+    },
+    component: {
+      template: '<router-view></router-view>'
+    },
+    meta: {requiresAuth: true},
+    children: [
+      {
+        path: 'admin-articleList',
+        name: 'admin-articleList',
+        component: function (resolve) {
+          require(['./views/admin/articleList.vue'], resolve)
+        },
+        meta: {requiresAuth: true}
+      }
+    ]} */
 ];
 const router = new VueRouter({
   mode: 'history', // 启用HTML5 history模式
@@ -74,22 +114,20 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     // 未登录状态
-    console.log(store.state.isLogin);
     if (!store.state.isLogin) {
       // 存在authorization信息，则验证下。
       let authorization = !!Vue.$localStorage.authorization;
-      console.log(authorization);
       if (authorization) {
         _checkAuth().then(function () {
           next();
         }, function () {
           next({
-            name: 'login'
+            name: 'user'
           });
         });
       } else {
         next({
-          name: 'login'
+          name: 'user'
         });
       }
     } else {
@@ -97,12 +135,16 @@ router.beforeEach((to, from, next) => {
         next();
       }, function () {
         next({
-          name: 'login'
+          name: 'user'
         });
       });
     }
   } else {
-    next(); // 确保一定要调用 next()
+    _checkAuth().then(function () {
+      next();
+    }, function () {
+      next();
+    });
   }
 });
 
@@ -111,7 +153,7 @@ router.beforeEach((to, from, next) => {
  * */
 function _checkAuth() {
   return new Promise(function (resolve, reject) {
-    let authorization = Vue.$localStorage.authorization;
+    let authorization = Vue.$localStorage.authorization || {};
     let time = parseInt(authorization.time);
     if ((new Date().getTime() - time) < 1000 * 60 * 60 * 2) {
       // token有效,能进入
@@ -121,7 +163,6 @@ function _checkAuth() {
       resolve();
     } else {
       Vue.$localStorage.$delete('authorization');
-      Vue.$localStorage.$delete('commentInfo');
       store.dispatch('setLoginState', false);
       reject();
     }

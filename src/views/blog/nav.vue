@@ -22,6 +22,17 @@
       </router-link>
     </nav>
     <nav class="nav-bottom">
+      <router-link v-show="isLogin" class="nav-item animated fadeIn hidden-xs"
+                   :to="{ name: 'admin-tag'}" activeClass="active"
+                   data-toggle="tooltip" data-placement="right" title="标签管理">
+        <i class="fa fa-tag fa-lg"></i>
+      </router-link>
+      <router-link v-show="isLogin" class="nav-item animated fadeIn hidden-xs"
+                   :to="{ name: 'music'}" activeClass="active" data-toggle="tooltip"
+                   data-placement="right"
+                   title="文章管理">
+        <i class="fa fa-list fa-lg"></i>
+      </router-link>
       <a v-show="isLogin" class="nav-item animated fadeIn hidden-xs" data-toggle="tooltip"
          data-placement="right" title="退出" @click="doLoginout()">
         <i class="fa fa-sign-out fa-lg"></i>
@@ -152,7 +163,7 @@
         this.$router.back();
       },
       doLoginout: function () {
-
+        $('#logout').modal();
       }
     }
   };

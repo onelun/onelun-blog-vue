@@ -129,7 +129,7 @@
       // 小球颜色
       color: {
         type: String,
-        default: '#fff'
+        default: '#e78170'
       },
       // 小球数量
       number: {

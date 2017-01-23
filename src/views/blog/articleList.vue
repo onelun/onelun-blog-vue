@@ -61,7 +61,6 @@
     methods: {
       loadMore() {
         this.isLoading = true;
-        console.log('loading');
         this.getArticleList();
       },
       getArticleList: function () {

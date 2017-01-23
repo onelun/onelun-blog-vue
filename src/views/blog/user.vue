@@ -13,15 +13,14 @@
             <router-link :to="{ name: 'register'}" activeClass="active" tag="a">注册</router-link>
           </li>
         </ul>
+        <keep-alive>
         <router-view></router-view>
+        </keep-alive>
       </div>
     </div>
     <section class="index-copyright">
       <copyright></copyright>
     </section>
-    <div class="background blur">
-      <img src="../../assets/images/myinfo.jpg" width="100%" height="100%">
-    </div>
   </div>
 </template>
 <style lang="scss">
@@ -37,7 +36,6 @@
       align-items: center;
       box-sizing: border-box;
       height: 100%;
-      background: transparent radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 100%);
       left: 0;
       top: 0;
       width: 100%;
@@ -85,14 +83,6 @@
       text-align: center;
       width: 100%;
       left: 0;
-    }
-    .background {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
     }
   }
 </style>

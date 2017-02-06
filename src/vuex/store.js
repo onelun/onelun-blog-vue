@@ -6,7 +6,8 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import * as actions from './actions';
 import {
-  SET_LOGIN_STATUS
+  SET_LOGIN_STATUS,
+  SET_SHOW_BIGADMIN_STATUS
 } from './mutation-types';
 // vuex模块
 // 告诉 vue “使用” vuex
@@ -20,13 +21,18 @@ export default new Vuex.Store({
   actions,
   // 全局state状态
   state: {
-    isLogin: false // 是否登录
+    isLogin: false, // 是否登录
+    isShowBigAdmin: false
   },
   // 全局突变事件处理
   mutations: {
     // 设置我的社交弹出组件的img
     [SET_LOGIN_STATUS] (state, status) {
       state.isLogin = !!status;
+    },
+    [SET_SHOW_BIGADMIN_STATUS] (state, status) {
+      state.isShowBigAdmin = !!status;
     }
+
   }
 });

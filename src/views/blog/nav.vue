@@ -28,7 +28,7 @@
         <i class="fa fa-tag fa-lg"></i>
       </router-link>
       <router-link v-show="isLogin" class="nav-item animated fadeIn hidden-xs"
-                   :to="{ name: 'music'}" activeClass="active" data-toggle="tooltip"
+                   :to="{ name: 'admin-articleManager'}" activeClass="active" data-toggle="tooltip"
                    data-placement="right"
                    title="文章管理">
         <i class="fa fa-list fa-lg"></i>

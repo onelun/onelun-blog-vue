@@ -77,31 +77,46 @@ const routes = [
           require(['./views/admin/tagList.vue'], resolve);
         },
         meta: {requiresAuth: true}
+      },
+      {
+        path: 'admin-articleManager',
+        name: 'admin-articleManager',
+        redirect: {
+          name: 'admin-articleList'
+        },
+        component: {
+          template: '<keep-alive><router-view></router-view></keep-alive>'
+        },
+        meta: {requiresAuth: true},
+        children: [
+          {
+            path: 'admin-articleList',
+            name: 'admin-articleList',
+            component: function (resolve) {
+              require(['./views/admin/articleList.vue'], resolve);
+            },
+            meta: {requiresAuth: true}
+          },
+          {
+            path: 'admin-article/:articleId',
+            name: 'admin-article',
+            component: function (resolve) {
+              require(['./views/admin/article.vue'], resolve);
+            },
+            meta: {requiresAuth: true}
+          },
+          {
+            path: 'test',
+            name: 'test',
+            component: function (resolve) {
+              require(['./views/admin/test.vue'], resolve);
+            },
+            meta: {requiresAuth: true}
+          }
+        ]
       }
     ]
   }
-
-  /* ,
-  {
-    path: 'admin-articleManager',
-    name: 'admin-articleManager',
-    redirect: {
-      name: 'admin-articleList'
-    },
-    component: {
-      template: '<router-view></router-view>'
-    },
-    meta: {requiresAuth: true},
-    children: [
-      {
-        path: 'admin-articleList',
-        name: 'admin-articleList',
-        component: function (resolve) {
-          require(['./views/admin/articleList.vue'], resolve)
-        },
-        meta: {requiresAuth: true}
-      }
-    ]} */
 ];
 const router = new VueRouter({
   mode: 'history', // 启用HTML5 history模式

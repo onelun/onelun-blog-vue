@@ -4,13 +4,12 @@
 'use strict';
 import API from '../config.js';
 import Vue from 'vue';
-/* import { doError } from './doError'; */
+import { doError } from './doError';
 
 // 获取文章列表-for 最近更新
 export const getArticleLastList = function (params) {
   return new Promise((resolve, reject) => {
-    console.log(API.getArticleList);
-    Vue.http.get(API.getArticleList, { params: params }).then((response) => {
+    Vue.http.get(API.getArticleLatestList, { params: params }).then((response) => {
       // success callback
       let result = response.data;
       console.log(response.data);
@@ -26,3 +25,42 @@ export const getArticleLastList = function (params) {
     });
   });
 };
+
+/**
+ * 获取文章列表（无分页）
+ * @param params
+ * @returns {Promise}
+ * @constructor
+ */
+export const GetArticleList = function (params) {
+  return new Promise(function (resolve, reject) {
+    Vue.http.get(API.getArticleList, params).then((response) => {
+      let result = response.data;
+      if (parseInt(result.code) === 1) {
+        resolve(result);
+      } else {
+        reject(doError(result));
+      }
+    }, (error) => {
+      console.error(error.message);
+      reject(doError(error));
+    });
+  });
+};
+
+export const DeleteArticle = function (params) {
+  return new Promise(function (resolve, reject) {
+    Vue.http.post(API.deleteArticle, params).then((response) => {
+      let result = response.data;
+      if (parseInt(result.code) === 1) {
+        resolve(result);
+      } else {
+        reject(doError(result));
+      }
+    }, (error) => {
+      console.error(error.message);
+      reject(doError(error));
+    });
+  });
+};
+

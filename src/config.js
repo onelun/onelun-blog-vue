@@ -46,7 +46,9 @@ module.exports = {
   pageIndex: '1',
   pageSize: '10',
   // 获取文章列表
-  getArticleList: `${url}/article/latestList`,
+  getArticleLatestList: `${url}/article/latestList`,
+  getArticleList: `${url}/article/getArticleList`,
+  deleteArticle: `${url}/article/deleteArticle`,
   // 注册&登录
   register: `${url}/user/register`,
   login: `${url}/user/login`,

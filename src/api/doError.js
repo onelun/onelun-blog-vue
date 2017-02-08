@@ -5,30 +5,32 @@
  * 其余由api自己处理: 2~5-失败；
  */
 import API from '../config.js';
-import { Toast } from 'mint-ui';
-
+import {Message} from 'element-ui';
 export const doError = function (result) {
   let code = parseInt(result.code);
   switch (code) {
-    case -505:
-      Toast({
-        message: '服务器异常，请稍后再试!',
-        position: 'bottom'
+    case -1:
+      Message({
+        message: result.message || API.SYS_ERR.message,
+        showClose: true,
+        type: 'error'
       });
       break;
-    case -200:
-      Toast({
+    case -3:
+      Message({
         message: 'Token超时,请再登陆!',
-        position: 'bottom'
+        showClose: true,
+        type: 'warning'
       });
       window.$router.replace({
         name: 'user'
       });
       break;
     default:
-      Toast({
-        message: result.message || API.SYS_ERR.message,
-        position: 'bottom'
+      Message({
+        message: API.SYS_ERR.message,
+        showClose: true,
+        type: 'error'
       });
       break;
   }

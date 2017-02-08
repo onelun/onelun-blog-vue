@@ -203,7 +203,7 @@
           name: '',
           catalogueName: ''
         },
-        submitText: '666',
+        submitText: '',
         delTag: {
           objectId: ''
         }

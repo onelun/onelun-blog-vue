@@ -52,8 +52,8 @@ router.get('/getTagList', function(req, res, next) {
 });
 
 router.post('/editTag', function(req, res, next) {
-  let cql = 'select count(*) from Tag where name = ?';
-  let pvalues = [req.body.name];
+  let cql = 'select count(*) from Tag where name = ? and objectId <> ?';
+  let pvalues = [req.body.name, req.body.objectId];
   AV.Query.doCloudQuery(cql, pvalues).then(function (data) {
     let count = data.count;
     if (count > 0) {

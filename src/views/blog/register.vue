@@ -50,7 +50,6 @@
 <script type="text/ecmascript-6">
     import {mapState, mapActions} from 'vuex';
     import {register} from 'api/user';
-    import { Toast } from 'mint-ui';
     export default {
       data() {
         return {
@@ -87,15 +86,8 @@
           let params = {'username': _this.username, 'password': _this.password, 'phone': _this.phone};
           register(params).then(function (result) {
             console.log(result);
-            Toast({
-              message: result.message,
-              position: 'bottom'
-            });
           }, function (error) {
-            Toast({
-              message: error.message,
-              position: 'bottom'
-            });
+            console.log(error);
           });
         }
       }

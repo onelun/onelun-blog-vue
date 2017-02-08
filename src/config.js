@@ -33,7 +33,7 @@ module.exports = {
    * 通用状态码
    * */
 
-  SYS_ERR: { message: '系统需要休息！', code: -2, data: {} }, // api请求系统错误
+  SYS_ERR: { message: '系统需要休息！', code: -1, data: {} }, // api请求系统错误
 
   /**
    * 用户、登录相关
@@ -49,6 +49,8 @@ module.exports = {
   getArticleLatestList: `${url}/article/latestList`,
   getArticleList: `${url}/article/getArticleList`,
   deleteArticle: `${url}/article/deleteArticle`,
+  editArticle: `${url}/article/editArticle`,
+  getArticleById: `${url}/article/getArticleById`,
   // 注册&登录
   register: `${url}/user/register`,
   login: `${url}/user/login`,

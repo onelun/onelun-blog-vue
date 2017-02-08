@@ -95,7 +95,6 @@
     import Vue from 'vue';
     import {mapState, mapActions} from 'vuex';
     import { login } from 'api/user';
-    import { Toast } from 'mint-ui';
     export default {
       data() {
         return {
@@ -138,10 +137,6 @@
             });
           }, function(error) {
             console.error(error);
-            Toast({
-              message: error.message,
-              position: 'bottom'
-            });
           });
         }
       }

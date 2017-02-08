@@ -1,6 +1,6 @@
 <template>
   <div class="adminBox">
-    <div class="adminBox-content" id="adminBox-content">
+    <div class="adminBox-content" :class="{'preview':isShowBigAdmin}" id="adminBox-content">
       <div class="adminBox-content-header">
         <h1 class="text-right textItem">
           one<span class="blue">Lun</span>
@@ -63,6 +63,11 @@
   .textItem {
     color: #fff;
   }
+  .adminBox-content {
+    &.preview {
+       width: 1530px;
+    }
+  }
 
   @include media("<=tablet") {
     .adminBox {
@@ -79,9 +84,18 @@
 </style>
 <script type="text/javascript">
   import copyright from 'components/copyright.vue';
+  import {mapState} from 'vuex';
   export default{
     data() {
       return {};
+    },
+    method: {
+
+    },
+    computed: {
+      ...mapState({
+        isShowBigAdmin: 'isShowBigAdmin'
+      })
     },
     components: {
       copyright

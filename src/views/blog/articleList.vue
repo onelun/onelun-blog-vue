@@ -40,14 +40,14 @@
     </div>
 </template>
 <script>
-  import { InfiniteScroll } from 'mint-ui';
+  // import { InfiniteScroll } from 'mint-ui';
   import copyright from 'components/copyright';
   import noData from 'components/nodata';
   import loading from 'components/loading';
   import {getArticleLastList} from 'api/article';
   import Vue from 'vue';
   import API from '../../config.js';
-  Vue.use(InfiniteScroll);
+  // Vue.use(InfiniteScroll);
   export default{
     data() {
       return {

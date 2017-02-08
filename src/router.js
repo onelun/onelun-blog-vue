@@ -85,7 +85,7 @@ const routes = [
           name: 'admin-articleList'
         },
         component: {
-          template: '<keep-alive><router-view></router-view></keep-alive>'
+          template: '<router-view></router-view>'
         },
         meta: {requiresAuth: true},
         children: [
@@ -102,14 +102,6 @@ const routes = [
             name: 'admin-article',
             component: function (resolve) {
               require(['./views/admin/article.vue'], resolve);
-            },
-            meta: {requiresAuth: true}
-          },
-          {
-            path: 'test',
-            name: 'test',
-            component: function (resolve) {
-              require(['./views/admin/test.vue'], resolve);
             },
             meta: {requiresAuth: true}
           }

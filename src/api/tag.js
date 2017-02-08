@@ -33,6 +33,30 @@ export const GetTagList = function (params) {
       let result = response.data;
       if (parseInt(result.code) === 1) {
         resolve(result);
+        Vue.$sessionStorage.$set(API.getTagList, result);
+      } else {
+        reject(doError(result));
+      }
+    }, (error) => {
+      console.error(error.message);
+      reject(doError(error));
+    });
+  });
+};
+
+export const GetTagListByCache = function (params) {
+  return new Promise(function (resolve, reject) {
+    let tmp = Vue.$sessionStorage[API.getTagList];
+    if (!!tmp) {
+      console.log('标签列表数据缓存');
+      resolve(tmp);
+      return;
+    }
+    Vue.http.get(API.getTagList, params).then((response) => {
+      let result = response.data;
+      if (parseInt(result.code) === 1) {
+        resolve(result);
+        Vue.$sessionStorage.$set(API.getTagList, result);
       } else {
         reject(doError(result));
       }

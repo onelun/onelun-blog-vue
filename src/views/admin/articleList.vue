@@ -6,7 +6,7 @@
         <i class="fa fa-fw fa-lg fa-list"></i> 文章列表 / <span class="blue">ARTICLE</span>
       </h3>
       <div class="text-right">
-        <router-link :to="{ name: 'test'}" activeClass="active" tag="button"
+        <router-link :to="{ name: 'admin-article', params: { articleId: 0 }}" activeClass="active" tag="button"
                      class="btn btn-success">
           <i class="fa fa-plus"></i>
         </router-link>
@@ -171,7 +171,6 @@
       const _this = this;
       // 获取文章列表
       GetArticleList().then((result) => {
-        console.log(result);
         _this.articleList = result.datas;
       });
     },

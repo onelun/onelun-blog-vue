@@ -56,4 +56,38 @@ router.post('/deleteArticle', function(req, res, next) {
   });
 });
 
+router.post('/editArticle', function(req, res, next) {
+  let objectId = req.body.objectId;
+  let Article = AV.Object.createWithoutData('Article', objectId);
+  // 修改属性
+  Article.set('title', req.body.title);
+  Article.set('publishTime', req.body.publishTime);
+  Article.set('tags', req.body.tags);
+  Article.set('state', req.body.state);
+  Article.set('content', req.body.content);
+  // 保存到云端
+  Article.save().then((Article) => {
+    // 返回保存结果
+    successResult.data = Article;
+    res.json(successResult);
+  }, (error) => {
+    console.error(error);
+    errorResult.message = '文章编辑失败';
+    res.json(errorResult);
+  });
+});
+
+router.get('/getArticleById', function(req, res, next) {
+  let query = new AV.Query(Article);
+  let objectId = req.query.objectId;
+  query.get(objectId).then(function (article) {
+    successResult.data = article;
+    res.json(successResult);
+  }, function(err) {
+    console.error(err);
+    errorResult.messages = '查询失败,失败原因：'+err.message;
+    res.json(result);
+  }).catch(next);
+});
+
 module.exports = router;

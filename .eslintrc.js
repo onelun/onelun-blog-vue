@@ -22,6 +22,8 @@ module.exports = {
     'indent': 0,
     'space-before-function-paren': 0,
     'no-unused-vars': 0,
-    'no-undef': 0
+    'no-undef': 0,
+    'one-var': 0,
+    'no-extra-boolean-cast': 0
   }
 }

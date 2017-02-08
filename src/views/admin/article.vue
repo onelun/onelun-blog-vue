@@ -44,23 +44,21 @@
             <div class="form-inline other_form_2">
               <div class="form-group tagsBox">
                 <label>添加标签</label>
-                <Multiselect class="form-control multiselect other_form&#45;&#45;input small" placeholder="请选择" id="tags"
-                           :searchable="true"
-                           :close-on-select="false"
-                           :limit="3"
-                           :multiple="true"
-                           :max="3"
-                           :max-height="500"
-                           :selected="selected"
-                           :options="options"
-                           deselect-label="点击移除" select-label="点击选择" selected-label="当前选择" option-key="objectId" option-label="name"
-                           @update="updateValuePrimitive"></Multiselect>
+                <multiselect class="form-control multiselect other_form&#45;&#45;input small" id="tags"
+                      v-model="selected" tag-placeholder="Add this as new tag" placeholder="请选择" label="name"
+                      track-by="objectId" :max="3" :options="options" :multiple="true" :taggable="true" :limit="3"
+                      :searchable="true" :close-on-select="false" @input="updateValueAction"
+                      deselect-label="点击移除" select-label="点击选择" selected-label="当前选择">
+                  <template slot="maxElements" scope="props">
+                    <div>最多选择3项, 如果选择其他请先移除。</div>
+                  </template>
+                </multiselect>
               </div>
               <div class="btn-group" role="group">
-                <button class="btn btn-info" @click="publishBtn()" v-bind:disabled="!article.title || !content_raw || isPublishing">
+                <button class="btn btn-info" @click="publishBtn()" v-bind:disabled="!article.title || !contentRaw || isPublishing">
                   <i class="fa fa-fw" :class="{true:'fa-spinner fa-spin',false:'fa-rocket'}[isPublishing]"></i> 发布
                 </button>
-                <button class="btn btn-default" @click="draftBtn()" v-bind:disabled="!article.title || !content_raw || isPublishing">
+                <button class="btn btn-default" @click="draftBtn()" v-bind:disabled="!article.title || !contentRaw || isPublishing">
                   <i class="fa fa-fw" :class="{true:'fa-spinner fa-spin',false:'fa-save'}[isDrafting]"></i> 草稿
                 </button>
                 <button @click="previewBtn()" class="btn btn-default showPreview">
@@ -74,7 +72,7 @@
         <div class="articleEdit">
           <label for="textarea">文章详情(MarkDown编辑)</label>
           <div class="textaresBox textaresBox_input">
-            <textarea id="textarea" v-model="content_raw" class="form-control textarea"></textarea>
+            <textarea id="textarea" v-model="contentRaw" class="form-control textarea"></textarea>
           </div>
         </div>
       </div>
@@ -97,7 +95,7 @@
         <div class="previewTextarea">
           <label for="textarea">文章预览(实时)</label>
           <div class="textaresBox textaresBox_preview">
-            <div class="textarea markdown-body" id="textareaPreview" v-html="content_marked"></div>
+            <div class="textarea markdown-body" id="textareaPreview" v-html="contentMarked"></div>
           </div>
         </div>
       </div>
@@ -389,27 +387,42 @@
 <script type="text/ecmascript-6">
   import Vue from 'vue';
   import lodash from 'lodash';
-  // import marked from 'marked';
-  // import hljs from 'highlight.js';
+  import marked from 'marked';
+  import hljs from 'highlight.js';
   import moment from 'moment';
   import Multiselect from 'vue-multiselect';
   import Clipboard from 'clipboard';
   import copyright from 'components/copyright';
 
-  import {GetTagList} from 'api/tag';
+  import {GetTagListByCache} from 'api/tag';
+  import {EditArticle, GetArticleById} from 'api/article';
   // import {ImageUpload} from 'api/upload';
+  import {autoTextarea} from 'utils/autoTextarea';
+  import {mapState, mapActions} from 'vuex';
+  import {Message} from 'element-ui';
 
   import 'assets/css/codeHighLight.css';
   import 'assets/css/markdown.scss';
-
   import 'bootstrap-datetimepicker/src/sass/bootstrap-datetimepicker-build.scss';
   import 'bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js';
   import 'bootstrap/scss/bootstrap/_button-groups.scss';
   import 'bootstrap/scss/bootstrap/_input-groups.scss';
   import 'bootstrap/scss/bootstrap/_dropdowns.scss';
   import 'bootstrap/js/dropdown.js';
-  import {mapState, mapActions} from 'vuex';
 
+  marked.setOptions({
+    renderer: new marked.Renderer(),
+    gfm: true,
+    tables: true,
+    breaks: false,
+    pedantic: false,
+    sanitize: true,
+    smartLists: true,
+    smartypants: false,
+    highlight: function (code) {
+      return hljs.highlightAuto(code).value;
+    }
+  });
   export default {
     data() {
       return {
@@ -432,40 +445,134 @@
     },
     methods: {
       // 标签多选更新
-      updateValuePrimitive(value) {
+      updateValueAction(value) {
         this.selected = value;
       },
       // 获取文章
       getArticle(id) {
-
+        const _this = this;
+        let $textArea = document.getElementById('textarea');
+        GetArticleById(id).then((result) => {
+          let data = result.data;
+          _this.article = data;
+          _this.contentRaw = data.content;
+          _this.contentMarked = marked(_this.contentRaw);
+          _this.publishTime = moment(new Date(_this.article.publishTime)).format('YYYY/MM/DD HH:mm:ss');
+          _this.selected = data.tags;
+          setTimeout(function () {
+            autoTextarea($textArea, 10);
+          }, 0);
+        }, (error) => {
+          console.error(error);
+        });
       },
       // 获取书写的文章信息
       collectEditedArtInfo() {
-
+        const _this = this;
+        let tagsArr = [];
+        for (let tag of _this.selected) {
+          tagsArr.push(tag.objectId);
+        }
+        let params = {
+          'objectId': _this.article.objectId,
+          'title': _this.article.title,
+          'publishTime': new Date(_this.publishTime),
+          'state': _this.article.state,
+          'content': _this.contentRaw,
+          'tags': tagsArr
+        };
+        return params;
       },
       // 点击发布按钮
       publishBtn() {
-
+        const _this = this;
+        _this.article.state = true;
+        _this.isPublishing = true;
+        _this._save().then(function () {
+          setTimeout(function () {
+            history.back();
+            _this.setShowBigAdminStatus(false);
+            _this.isPublishing = false;
+          }, 500);
+        });
       },
       // 点击草稿
       draftBtn() {
-
+        const _this = this;
+        _this.article.state = false;
+        _this.isDrafting = true;
+        _this._save().then(function (data) {
+          setTimeout(function () {
+            _this.isDrafting = false;
+            Message({
+              message: '保存成功！',
+              showClose: true,
+              type: 'success'
+            });
+          }, 500);
+        });
       },
       // 预览
       previewBtn() {
-
+        const _this = this;
+        _this.setShowBigAdminStatus(!_this.isShowBigAdmin);
       },
       _save() {
-
+        const _this = this;
+        let params = _this.collectEditedArtInfo();
+        return EditArticle(params).then(function (result) {
+          let data = result.data;
+          // 针对新建的情况
+          if (!params.objectId) {
+            let _id = data.objectId;
+            _this.article.objectId = _id;
+            // 跳转
+            _this.$router.replace({
+              name: 'admin-article',
+              params: {articleId: _id}
+            });
+          }
+        });
       },
       _autoSave() {
-
+        const _this = this;
+        if (!_this.article.title) {
+          return false;
+        }
+        if (!_this.contentRaw) {
+          return false;
+        }
+        if (_this.article.state) {
+          _this.isPublishing = true;
+        } else {
+          _this.isDrafting = true;
+        }
+        _this._save().then(function () {
+          setTimeout(function () {
+            if (_this.article.state) {
+              _this.isPublishing = false;
+            } else {
+              _this.isDrafting = false;
+            }
+            Message({
+              message: '保存成功！',
+              showClose: true,
+              type: 'success'
+            });
+          }, 500);
+        });
       },
       ...mapActions({
         setShowBigAdminStatus: 'setShowBigAdminStatus'
       }),
       watchContentRawFn: lodash.debounce(function () {
-
+        const _this = this;
+        let $textArea = document.getElementById('textarea');
+        if ($textArea) {
+          autoTextarea($textArea, 10);
+          _this.contentMarked = marked(_this.contentRaw);
+          _this._autoSave();
+        }
       }, 5000)
 
     },
@@ -478,7 +585,7 @@
     created() {
       // 获取标签列表
       const _this = this;
-      GetTagList().then((result) => {
+      GetTagListByCache().then((result) => {
         _this.options = result.datas;
       });
     },
@@ -503,7 +610,7 @@
           'title': '',
           'publishTime': new Date(),
           'tags': [],
-          'state': '',
+          'state': false,
           'content': ''
         };
         // 时间
@@ -541,6 +648,9 @@
     components: {
       copyright,
       Multiselect
+    },
+    destroyed() {
+      this.setShowBigAdminStatus(false);
     }
   };
 </script>

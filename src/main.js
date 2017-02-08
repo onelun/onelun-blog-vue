@@ -9,15 +9,16 @@ import 'bootstrap/scss/bootstrap.slim.scss';
 import 'bootstrap/js/tooltip.js';
 import 'bootstrap/js/modal.js';
 import 'bootstrap/js/transition.js';
+import 'element-ui/lib/theme-default/index.css';
 import ua from './plugin/parseUA';
 import VueResource from 'vue-resource';
-import 'mint-ui/lib/style.css';
 /**
  * vue-resource 配置
  */
 Vue.use(VueResource);
 Vue.http.headers.common['Access-Control-Allow-Origin'] = '*';
 Vue.http.headers.common['Content-Type'] = 'application/json; charset=utf-8';
+
 /**
  * $router全局化，便于外部js调用
  * @type {VueRouter}

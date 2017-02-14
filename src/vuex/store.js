@@ -7,7 +7,8 @@ import Vuex from 'vuex';
 import * as actions from './actions';
 import {
   SET_LOGIN_STATUS,
-  SET_SHOW_BIGADMIN_STATUS
+  SET_SHOW_BIGADMIN_STATUS,
+  SET_LOADING_STATUS
 } from './mutation-types';
 // vuex模块
 // 告诉 vue “使用” vuex
@@ -22,7 +23,8 @@ export default new Vuex.Store({
   // 全局state状态
   state: {
     isLogin: false, // 是否登录
-    isShowBigAdmin: false
+    isShowBigAdmin: false,
+    isLoading: false // 是否在刷新中
   },
   // 全局突变事件处理
   mutations: {
@@ -32,6 +34,9 @@ export default new Vuex.Store({
     },
     [SET_SHOW_BIGADMIN_STATUS] (state, status) {
       state.isShowBigAdmin = !!status;
+    },
+    [SET_LOADING_STATUS] (state, status) {
+      state.isLoading = !!status;
     }
 
   }

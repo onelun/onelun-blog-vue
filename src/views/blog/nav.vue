@@ -33,6 +33,13 @@
                    title="文章管理">
         <i class="fa fa-list fa-lg"></i>
       </router-link>
+      <a class="nav-item fa-stack fa-lg hidden-xs" data-toggle="tooltip" data-placement="right" title="切换背景"
+         @click="changeBG()">
+        <i class="fa fa-photo fa-fw fa-lg"></i>
+        <section class="rightBottomStatus">
+          <i class="fa fa-lg fa-refresh" :class="{true:'',false:'fa-spin'}[!isChangeBG]"></i>
+        </section>
+      </a>
       <a v-show="isLogin" class="nav-item animated fadeIn hidden-xs" data-toggle="tooltip"
          data-placement="right" title="退出" @click="doLoginout()">
         <i class="fa fa-sign-out fa-lg"></i>
@@ -147,10 +154,12 @@
 </style>
 <script type="text/ecmascript-6">
   import {mapState} from 'vuex';
+  import API from '../../config.js';
   export default{
     data() {
       return {
-        isMobile: true
+        isMobile: true,
+        isChangeBG: false
       };
     },
     computed: {
@@ -164,6 +173,90 @@
       },
       doLoginout: function () {
         $('#logout').modal();
+      },
+      _loadImg(url, cb) {
+        if (/.png$|.jpg$|.gif$/.test(url)) {
+          let _TagObjs = new Image();
+          _TagObjs.src = url;
+          _TagObjs.onload = function () {
+            !!cb && cb();
+          };
+        }
+      },
+      _randomImage() {
+        const _this = this;
+        let imageList = API.imageList;// 图片列表
+        let imageCount = imageList.length;
+        // 返回 v_from 和 v_to 之间的随机整数
+        function _selectFrom(from, to) {
+          let range = to - from + 1;
+          let selected = Math.floor(Math.random() * range + from);
+          if (selected === parseInt(_this.bgIndexNow)) {
+            // console.log('和上一个相同,再去随机取值')
+            return _selectFrom(from, to);
+          } else {
+            // console.log("当前取值为:" + (selected+1))
+            _this.bgIndexNow = selected;
+            return selected;
+          }
+        }
+
+        return imageList[_selectFrom(0, imageCount - 1)];
+      },
+      changeBG(imgUrl) {
+        const _this = this;
+        if (_this.isChangeBG) {
+          return false;
+        }
+        if (!imgUrl) {
+          imgUrl = _this._randomImage();
+        }
+        _this.isChangeBG = true;
+
+        // 检查是否有用户自己保存过背景图片,如果保存过,则自动切换
+        _this._loadImg(imgUrl, function () {
+          var css = function (t, s) {
+            s = document.createElement('style');
+            s.innerText = t;
+            document.body.appendChild(s);
+          };
+
+          let cssRules = '.background:before{' +
+            'content:"";' +
+            'position: fixed;' +
+            'z-index: -1;' +
+            'top: 0;' +
+            'right: 0;' +
+            'bottom: 0;' +
+            'left: 0;' +
+            'background-repeat: no-repeat;' +
+            'background-size: cover;' +
+            'background-attachment: fixed;' +
+            'background-position: center center;' +
+            'background-image: ' + `url(${imgUrl});` +
+            '}';
+
+          // 保存用户切换的壁纸信息,下次直接自动切换
+          _this.$localStorage.$set('userBackground', imgUrl);
+          css(cssRules);
+          // 动画是500ms
+          setTimeout(function () {
+            _this.isChangeBG = false;
+          }, 1000);
+        });
+      }
+    },
+    created() {
+      const _this = this;
+      /**
+       * 背景初始化
+       * */
+      if (!navigator.userAgent.match(/AppleWebKit.*Mobile.*/)) {
+        if (!!_this.$localStorage.userBackground) {
+          setTimeout(function () {
+            _this.changeBG(_this.$localStorage.userBackground);
+          }, 3000);
+        }
       }
     }
   };

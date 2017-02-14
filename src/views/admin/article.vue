@@ -471,7 +471,8 @@
         const _this = this;
         let tagsArr = [];
         for (let tag of _this.selected) {
-          tagsArr.push(tag.objectId);
+          let artTag = {name: tag.name, objectId: tag.objectId};
+          tagsArr.push(artTag);
         }
         let params = {
           'objectId': _this.article.objectId,

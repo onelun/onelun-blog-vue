@@ -9,9 +9,10 @@ import {GetTagListByCache} from './tag';
 // 获取文章列表-for 最近更新
 export const getArticleLastList = function (params) {
   return new Promise((resolve, reject) => {
+    let result = {};
     Vue.http.get(API.getArticleLatestList, { params: params }).then((response) => {
       // success callback
-      let result = response.data;
+      result = response.data;
       console.log(response.data);
       if (parseInt(result.code) === 1) {
         resolve(result);
@@ -22,10 +23,12 @@ export const getArticleLastList = function (params) {
     }, (error) => {
       console.error(error);
       reject(API.SYS_ERR);
+    }).then((count) => {
+      result.total = count;
+      resolve(result);
     });
   });
 };
-
 /**
  * 获取文章列表（无分页）
  * @param params
@@ -84,7 +87,8 @@ export const GetArticleById = function (id) {
     Vue.http.get(API.getArticleById, {params: {objectId: id}}).then((response) => {
       let result = response.data;
       if (parseInt(result.code) === 1) {
-        GetTagListByCache().then((tagResult) => {
+        resolve(result);
+        /* GetTagListByCache().then((tagResult) => {
           let tags = tagResult.datas;
           let selectedTags = [];
           for (let tag of tags) {
@@ -95,7 +99,7 @@ export const GetArticleById = function (id) {
           }
           result.data.tags = selectedTags;
           resolve(result);
-        });
+        }); */
       } else {
         reject(doError(result));
       }

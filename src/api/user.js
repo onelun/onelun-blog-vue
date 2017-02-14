@@ -4,7 +4,7 @@
 'use strict';
 import API from '../config.js';
 import Vue from 'vue';
-/* import { doError } from './doError'; */
+import { doError } from './doError';
 
 // 注册
 export const register = function (params) {
@@ -16,16 +16,16 @@ export const register = function (params) {
         resolve(result);
         // Vue.$sessionStorage.$set(url, result.data);
       } else {
-        reject(parseInt(result.code));
+        reject(doError(result));
       }
     }, (error) => {
       console.error(error);
-      reject(API.SYS_ERR);
+      reject(doError(error));
     });
   });
 };
 // 登录
-export const login = function (params) {
+export const Login = function (params) {
   return new Promise(function (resolve, reject) {
     Vue.http.get(API.login, {params: params}).then((response) => {
       // success callback
@@ -34,11 +34,11 @@ export const login = function (params) {
       if (parseInt(result.code) === 1) {
         resolve(result);
       } else {
-        reject(result);
+        reject(doError(result));
       }
     }, (error) => {
       console.error(error);
-      reject(API.SYS_ERR);
+      reject(doError(error));
     });
   });
 };

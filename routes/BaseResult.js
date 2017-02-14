@@ -21,6 +21,7 @@ module.exports = {
   QUERY_RESULT: {
     message: '查询成功',
     code: 1,
-    datas: []
+    datas: [],
+    total: 0
   }
 }

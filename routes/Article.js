@@ -16,17 +16,20 @@ router.get('/latestList', function(req, res, next) {
   let pageIndex = req.query.pageIndex || 1;
   let pageSize = req.query.pageSize || 10;
   let query = new AV.Query(Article);
-  query.descending('updatedAt');
-  query.limit(pageSize);
-  query.skip((pageIndex-1)*pageSize);
-  query.find().then(function(results) {
-    queryResult.datas = results;
-    res.json(queryResult);
-  }, function(err) {
-    console.error(err);
-    errorResult.messages = '查询失败,失败原因：'+err.message;
-    res.json(result);
-  }).catch(next);
+  query.count().then((count) => {
+    queryResult.total = count;
+    query.descending('updatedAt');
+    query.limit(pageSize);
+    query.skip((pageIndex-1)*pageSize);
+    query.find().then(function(results) {
+      queryResult.datas = results;
+      res.json(queryResult);
+    }, function(err) {
+      console.error(err);
+      errorResult.messages = '查询失败,失败原因：'+err.message;
+      res.json(result);
+    }).catch(next);
+  });
 });
 
 router.get('/getArticleList', function(req, res, next) {
@@ -65,6 +68,7 @@ router.post('/editArticle', function(req, res, next) {
   Article.set('tags', req.body.tags);
   Article.set('state', req.body.state);
   Article.set('content', req.body.content);
+  Article.set('abstract', req.body.content.substring(0, 120) + '...');
   // 保存到云端
   Article.save().then((Article) => {
     // 返回保存结果

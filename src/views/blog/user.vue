@@ -29,6 +29,7 @@
     position: absolute;
     height: 100%;
     width: 100%;
+    background: transparent radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 100%);
     .user-content {
       display: flex;
       justify-content: center;

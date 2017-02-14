@@ -35,6 +35,13 @@ const routes = [
     ]
   },
   {
+    path: '/article/:articleId',
+    name: 'article',
+    component: function (resolve) {
+      require(['./views/blog/article.vue'], resolve);
+    }
+  },
+  {
     path: '/music',
     name: 'music',
     component: require('./views/blog/music.vue')

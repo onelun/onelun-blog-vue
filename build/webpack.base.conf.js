@@ -29,7 +29,8 @@ module.exports = {
       'components': path.resolve(__dirname, '../src/components'),
       'views': path.resolve(__dirname, '../src/views'),
       'utils': path.resolve(__dirname, '../src/utils'),
-      'jquery': path.resolve(__dirname, '../node_modules/jquery/dist/jquery.slim.min.js'),
+      'jquery': path.resolve(__dirname, '../src/plugin/jquery.min.js'),
+      'plugin': path.resolve(__dirname, '../src/plugin'),
       'api': path.resolve(__dirname, '../src/api'),
       // 插件位置
       // "vue-multiselect": path.resolve(__dirname, '../src/plugin/vue-multiselect/Multiselect.vue'),
@@ -105,7 +106,7 @@ module.exports = {
       $: "jquery",
       jQuery: "jquery",
       jquery: "jquery",
-      "window.jQuery": "jquery",
+      "window.jQuery": "jquery"
     })
   ]
 }

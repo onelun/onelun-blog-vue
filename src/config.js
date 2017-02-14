@@ -6,6 +6,7 @@ let CONFIG;
 if (process.env.NODE_ENV === 'production') {
   CONFIG = {
     url: 'http://www.onelun.com/api',
+    img: 'http://www.onelun.com/static/images',
     MY_INFO_ID: '578251be1cd6c37a04a4d50b',
     MY: '我',
     EMAIL: '76480877@163.com'
@@ -13,6 +14,7 @@ if (process.env.NODE_ENV === 'production') {
 } else {
   CONFIG = {
     url: '/api',
+    img: '/static/images',
     // 我的信息_id
     MY_INFO_ID: '57ef5987e1bb0b0b7cbd17e8',
     // 我对对评论进行回复的信息
@@ -23,6 +25,7 @@ if (process.env.NODE_ENV === 'production') {
 
 // 接口API根地址
 const url = CONFIG.url;
+const img = CONFIG.img;
 // 我的信息_id
 const MY_INFO_ID = CONFIG.MY_INFO_ID;
 // 我对对评论进行回复的信息
@@ -44,7 +47,7 @@ module.exports = {
 
   // 分页
   pageIndex: '1',
-  pageSize: '10',
+  pageSize: '5',
   // 获取文章列表
   getArticleLatestList: `${url}/article/latestList`,
   getArticleList: `${url}/article/getArticleList`,
@@ -58,5 +61,13 @@ module.exports = {
   addTag: `${url}/tag/addTag`,
   getTagList: `${url}/tag/getTagList`,
   editTag: `${url}/tag/editTag`,
-  deleteTag: `${url}/tag/deleteTag`
+  deleteTag: `${url}/tag/deleteTag`,
+
+  /**
+   * 背景切换
+   */
+  imageList: [
+    `${img}/1.jpg`,
+    `${img}/2.jpg`
+  ]
 };

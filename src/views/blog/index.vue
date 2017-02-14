@@ -39,6 +39,7 @@
     position: absolute;
     top: 0;
     left: 0;
+    background: transparent radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 100%);
     .index-content {
       width: 100%;
       height: 100%;

@@ -94,7 +94,7 @@
 <script type="text/ecmascript-6">
     import Vue from 'vue';
     import {mapState, mapActions} from 'vuex';
-    import { login } from 'api/user';
+    import { Login } from 'api/user';
     export default {
       data() {
         return {
@@ -123,14 +123,16 @@
             return;
           }
           let params = {'username': _this.username, 'password': _this.password};
-          login(params).then(function(result) {
+          Login(params).then(function(result) {
             // 设置登录状态信息
-            _this.$localStorage.$set('authorization', {
-              token: result.data.objectId,
+            let _id = result.data.objectId;
+            let authorization = {
+              token: _id,
               time: new Date().getTime()
-            });
+            };
+            _this.$localStorage.$set('authorization', authorization);
             // 设置请求的token
-            Vue.http.headers.common['authorization'] = 'token ' + result.data.objectId;
+            Vue.http.headers.common['authorization'] = 'token ' + _id;
             _this.setLoginState(true); // 设置全局登录状态
             _this.$router.replace({ // 跳转
               name: 'index'

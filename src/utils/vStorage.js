@@ -279,7 +279,7 @@ module.exports = {
         }
 
         function isTypedArray(value) {
-            return TYPED_ARRAY_REGEXP.test(toString.call(value));
+            return TYPED_ARRAY_REGEXP.test(Object.prototype.toString.call(value));
         }
 
         function isBlankObject(value) {
@@ -486,7 +486,7 @@ module.exports = {
          * @returns {boolean} True if `value` is a `Date`.
          */
         function isDate(value) {
-            return toString.call(value) === '[object Date]';
+            return Object.prototype.toString.call(value) === '[object Date]';
         }
 
         /**
@@ -497,7 +497,7 @@ module.exports = {
          * @returns {boolean} True if `value` is a `RegExp`.
          */
         function isRegExp(value) {
-            return toString.call(value) === '[object RegExp]';
+            return Object.prototype.toString.call(value) === '[object RegExp]';
         }
 
         function isNumber(value) {

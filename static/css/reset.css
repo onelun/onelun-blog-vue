@@ -104,7 +104,7 @@ div.scroll-nav__wrapper ol li.scroll-nav__sub-item {
 div.scroll-nav__wrapper ol li.scroll-nav__item.active a, li.scroll-nav__sub-item.active a {
   color: #38b7ea;
 }
-div.scroll-nav__wrapper ol li.scroll-nav__item.active:before, li.scroll-nav__sub-item.active: {
+div.scroll-nav__wrapper ol li.scroll-nav__item.active:before, li.scroll-nav__sub-item.active:before {
   color: #38b7ea;
 }
 div.scroll-nav__wrapper ol li.scroll-nav__item a, li.scroll-nav__sub-item a {
@@ -121,6 +121,10 @@ div.scroll-nav__wrapper ol li.scroll-nav__item:before, li.scroll-nav__sub-item:b
 div.scroll-nav__wrapper ol li.active {
   color: #ccc;
   content: "\f0d7";
+}
+
+.m-pbar .el-slider__runway {
+  margin-top: 2px;
 }
  .background:before {
   content: '';

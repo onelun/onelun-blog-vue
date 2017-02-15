@@ -7,6 +7,8 @@
       <keep-alive>
         <router-view></router-view>
       </keep-alive>
+      <!--播放器导航条-->
+      <music></music>
       <!--退出弹层-->
       <do-logout></do-logout>
       <loading v-if="isLoading"></loading>
@@ -30,6 +32,7 @@
   import Vue from 'vue';
   import blogNav from 'views/blog/nav.vue';
   import doLogout from 'components/doLogout.vue';
+  import music from 'views/blog/music';
   import vueMoment from 'vue-moment';
   import moment from 'moment';
   import store from './vuex/store';
@@ -62,7 +65,8 @@
     components: {
       blogNav,
       doLogout,
-      loading
+      loading,
+      music
     }
   };
 

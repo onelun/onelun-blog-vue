@@ -57,10 +57,6 @@
         </aside>
       </div>
     </div>
-    <!--返回最上层-->
-    <div id="toTop" class="backToTop">
-      <i class="fa fa-arrow-up"></i>
-    </div>
   </div>
 
 </template>
@@ -122,31 +118,6 @@
       background-color: transparent;
       overflow: hidden;
       margin-bottom: 30px;
-      &.loading {
-        .paper-header {
-          h1 {
-            background: #eee;
-          }
-        }
-        .paper-info {
-          .paper-info-span {
-            opacity: 0.3;
-            background: #fff;
-            min-width: 70px;
-            text-decoration: none;
-          }
-        }
-        .paper-content {
-          .paper-content-inner {
-            background-repeat: no-repeat;
-            background-size: 100% auto;
-            background-position: center top;
-            min-height: 834px;
-            width: 100%;
-          }
-        }
-
-      }
       .paper-header {
         border: 1px solid transparent;
         padding: 35px 35px 0;
@@ -209,35 +180,6 @@
         width: 40%;
         height: 0;
       }
-    }
-  }
-
-  .backToTop {
-    position: fixed;
-    left: 700px;
-    width: 60px;
-    height: 60px;
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 100%;
-    font-size: 20px;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    transition: all ease 200ms;
-    z-index: 999;
-    margin-left: 40px;
-    bottom: 20px;
-    opacity: 0;
-    &:hover {
-      background: $base-theme-color;
-    }
-  }
-
-  @include media("<=desktop") {
-    .backToTop {
-      margin-left: 0;
     }
   }
 
@@ -309,7 +251,6 @@
   import API from '../../config.js';
   import marked from 'marked';
   import {GetArticleById, GetArticleTop} from 'api/article';
-  import loading from 'components/loading';
   import 'assets/css/codeHighLight.css';
   import 'assets/css/markdown.scss';
   import 'bootstrap/scss/bootstrap/_breadcrumbs.scss';
@@ -330,16 +271,10 @@
     }
   });
   module.exports = {
-    replace: true,
     data: function () {
       return {
         article: {},
-        contentMarked: '',
-        articleTop: {},
-        toggle: true,
-        selectId: '',
-        hasNickName: false,
-        topNum: 5 // top 榜单
+        contentMarked: ''
       };
     },
     computed: {
@@ -351,17 +286,6 @@
       ...mapActions({
         setLoadingStatuS: 'setLoadingStatuS'
       }),
-      replyBtn: function (id) {
-        if (this.selectId === id) {
-          this.toggle = !this.toggle;
-        } else {
-          this.toggle = true;
-          this.selectId = id;
-        }
-      },
-      scrollTop: () => {
-        $(window).scrollTop(0);// 滚到顶部
-      },
       /**
        * 获取数据
        * @param articleId 文章id
@@ -389,58 +313,16 @@
           _this.setLoadingStatuS(false);
           console.log(error);
         });
-      },
-
-      /**
-       * 返回顶部的事件handler
-       * */
-      backToTopHandler: function () {
-        let _width = $(document).width();
-        if (_width >= 1200) {
-          if ($(this).scrollTop() > 0) {
-            $('#toTop').css({
-              'opacity': 1,
-              'left': $('#article').offset().left + $('#article').width()
-            });
-          } else {
-            $('#toTop').css({
-              'opacity': 0
-            });
-          }
-        } else if (_width < 1200) {
-          if ($(this).scrollTop() > 0) {
-            $('#toTop').css({
-              'opacity': 1,
-              'left': $('#article').offset().left + $('#article').width() - $('#toTop').width()
-            });
-          } else {
-            $('#toTop').css({
-              'opacity': 0
-            });
-          }
-        }
       }
     },
     created: function () {
       const _this = this;
       let articleId = _this.$route.params.articleId;
-      $(window).scrollTop(0);// 滚到顶部
-      // To Top
-      $(document)
-      .on('scroll', _this.backToTopHandler)
-      .on('click', '#toTop', function () {
-        $(window).scrollTop(0);
-      });
-
       // 获取文章
       _this.getArticleById(articleId);
     },
-    destroyed: function () {
-      // $(document).off('scroll');
-    },
     components: {
-      copyright,
-      loading
+      copyright
     }
   };
 </script>

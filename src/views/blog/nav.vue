@@ -112,10 +112,41 @@
         font-size: 16px;
       }
       &.active {
-         color: $base-theme-color !important;
+        color: $base-theme-color !important;
+        .rightBottomStatus {
+          color: inherit;
+        }
       }
       &:hover {
-         color: $base-theme-color;
+        color: $base-theme-color;
+        .rightBottomStatus {
+          color: inherit;
+        }
+      }
+      .rightBottomStatus {
+        display: block;
+        position: absolute;
+        font-size: 14px;
+        right: 5px;
+        bottom: 3px;;
+        width: 18px;
+        height: 18px;
+        color: #999;
+        i {
+          display: block;
+          position: absolute;
+          width: 18px;
+          height: 18px;
+          overflow: hidden;
+          font-size: 18px;
+          bottom: 0;
+          left: 0;
+        }
+        .fa {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
       }
     }
   }
@@ -133,7 +164,7 @@
     }
   }
 
-  @include media(">desktop_small") {
+  @include media(">=desktop_small") {
     .blogNav {
       width: 45px;
       height: 100%;

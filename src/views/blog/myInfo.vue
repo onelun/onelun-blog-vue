@@ -33,16 +33,21 @@
               </li>
               <li data-toggle="modal" data-target="#socialContact"><i class="fa fa-qq"></i></li>
               <li data-toggle="modal" data-target="#socialContact"><i class="fa fa-weixin"></i></li>
-              <li><a title="新浪微博" target="_blank" href="#"><i class="fa fa-weibo"></i></a></li>
-              <li><a title="腾讯微博" target="_blank" href="#"><i class="fa fa-tencent-weibo"></i></a>
+              <li><a title="新浪微博" target="_blank"><i class="fa fa-weibo"></i></a></li>
+              <li><a title="腾讯微博" target="_blank"><i class="fa fa-tencent-weibo"></i></a>
               </li>
             </ul>
           </section>
         </section>
       </section>
-      <section class="mywords  visuallyhidden">
-        <p class="text-shadow">人生，少年，中年，老年，就如喝茶的三个阶段。头遍苦涩，正如初入社会磕绊坎坷。二遍舌底生津，在拼搏后收获财富，稳重和信心。
-          第三遍茶已逐渐淡去，犹如年纪渐大，耳顺易平心静，经过时光的洗练，心中一片清澈，诚如茶之味淡，茶水愈加透明。</p>
+      <section class="mywords visuallyhidden text-shadow">
+        <article>
+          <p>Hello 我是<code>oneLun</code>，欢迎访问我的博客！</p>
+          <p>这个博客是vue2.0、node、和leanCloud实现的全栈技术，也是我第一个全栈开发项目。
+            项目的样式模版来自网络，主要是为了学习vue和node相关技术，同时可以记录生活趣事和分享技术经验。
+            项目基本上耗尽了我下班时间和周末时间，不过收获还是挺多的。</p>
+          <p>另外，博客内容也会在GitHub上同步更新，欢迎Star！</p>
+        </article>
       </section>
       <div class="myinfo-background" :class="{'blur': showMyWords}">
         <img src="../../assets/images/myinfo.jpg" width="100%" height="100%">
@@ -237,8 +242,8 @@
       justify-content: flex-start;
       overflow: visible;
       text-align: left;
-      font-size: 24px;
-      line-height: 33px;
+      font-size: 18px;
+      line-height: 30px;
       max-width: 720px;
       color: #fff;
       user-select: none;

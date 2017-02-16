@@ -236,7 +236,6 @@
                 cursor: pointer;
                 position: relative;
               }
-              //按钮组
               .btn-group {
                 margin-bottom: 10px;
               }

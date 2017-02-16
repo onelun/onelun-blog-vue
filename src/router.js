@@ -26,11 +26,6 @@ const routes = [
         path: 'art-list',
         name: 'artList',
         component: require('./views/blog/articleList.vue')
-      },
-      {
-        path: 'his-list',
-        name: 'historyList',
-        component: require('./views/blog/historyList.vue')
       }
     ]
   },

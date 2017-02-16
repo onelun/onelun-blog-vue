@@ -284,7 +284,7 @@
     },
     methods: {
       ...mapActions({
-        setLoadingStatuS: 'setLoadingStatuS'
+        setLoadingStatus: 'setLoadingStatus'
       }),
       /**
        * 获取数据
@@ -292,11 +292,11 @@
        * */
       getArticleById: function (articleId) {
         const _this = this;
-        _this.setLoadingStatuS(true);
+        _this.setLoadingStatus(true);
          GetArticleById(articleId).then(function (result) {
           _this.article = result.data;
           _this.contentMarked = marked(_this.article.content);
-          _this.setLoadingStatuS(false);
+          _this.setLoadingStatus(false);
            setTimeout(() => {
              $('.markdown-body').scrollNav({
                sections: 'h2',  // 一级目录的元素
@@ -310,7 +310,7 @@
              });
            }, 500);
         }, function (error) {
-          _this.setLoadingStatuS(false);
+          _this.setLoadingStatus(false);
           console.log(error);
         });
       }

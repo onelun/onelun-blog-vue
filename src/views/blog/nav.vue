@@ -16,10 +16,13 @@
                    data-placement="right" title="博客">
         <i class="fa fa-map-signs fa-fw fa-lg"></i>
       </router-link>
-      <router-link class="nav-item" data-toggle="tooltip" activeClass="active" :to="{name: 'music'}"
-                   data-placement="right" title="音乐">
+      <a class="nav-item fa-stack fa-lg hidden-xs" data-toggle="tooltip" data-placement="right" title="音乐"
+         @click="changLockStatus()">
         <i class="fa fa-music fa-fw fa-lg"></i>
-      </router-link>
+        <section class="rightBottomStatus">
+          <i class="fa fa-lg fa-lock" :class="{true:'',false:'fa-unlock'}[isLockMusic]"></i>
+        </section>
+      </a>
     </nav>
     <nav class="nav-bottom">
       <router-link v-show="isLogin" class="nav-item animated fadeIn hidden-xs"
@@ -184,7 +187,7 @@
   }
 </style>
 <script type="text/ecmascript-6">
-  import {mapState} from 'vuex';
+  import {mapState, mapActions} from 'vuex';
   import API from '../../config.js';
   export default{
     data() {
@@ -195,10 +198,18 @@
     },
     computed: {
       ...mapState({
-        isLogin: 'isLogin'
+        isLogin: 'isLogin',
+        isLockMusic: 'isLockMusic'
       })
     },
     methods: {
+      ...mapActions({
+        setLockMusicStatus: 'setLockMusicStatus'
+      }),
+      changLockStatus() {
+        let _this = this;
+        _this.setLockMusicStatus(!_this.isLockMusic);
+      },
       navBack: function () {
         this.$router.back();
       },

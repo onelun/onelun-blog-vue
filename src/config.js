@@ -5,8 +5,9 @@
 let CONFIG;
 if (process.env.NODE_ENV === 'production') {
   CONFIG = {
-    url: 'http://www.onelun.com/api',
-    img: 'http://www.onelun.com/static/images',
+    url: 'http://www.onelun.site/api',
+    img: 'http://www.onelun.site/static/images',
+    music: 'http://www.onelun.site/static/music',
     MY_INFO_ID: '578251be1cd6c37a04a4d50b',
     MY: '我',
     EMAIL: '76480877@163.com'
@@ -15,6 +16,7 @@ if (process.env.NODE_ENV === 'production') {
   CONFIG = {
     url: '/api',
     img: '/static/images',
+    music: '/static/music',
     // 我的信息_id
     MY_INFO_ID: '57ef5987e1bb0b0b7cbd17e8',
     // 我对对评论进行回复的信息
@@ -26,6 +28,7 @@ if (process.env.NODE_ENV === 'production') {
 // 接口API根地址
 const url = CONFIG.url;
 const img = CONFIG.img;
+const music = CONFIG.music;
 // 我的信息_id
 const MY_INFO_ID = CONFIG.MY_INFO_ID;
 // 我对对评论进行回复的信息
@@ -69,5 +72,18 @@ module.exports = {
   imageList: [
     `${img}/1.jpg`,
     `${img}/2.jpg`
+  ],
+
+  musicList: [
+    {
+      musicUrl: `${music}/wwhm.mp3`,
+      name: '未闻花名 - 口琴版',
+      player: '口琴（未知）'
+    },
+    {
+      musicUrl: `${music}/gbqq.mp3`,
+      name: '告白气球',
+      player: '周杰伦'
+    }
   ]
 };

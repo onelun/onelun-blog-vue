@@ -13,7 +13,17 @@ var app = express();
 /*app.set('views', path.join(__dirname, 'dist'));
 app.set('view engine', 'ejs');*/
 app.use(express.static('/'));
-
+app.use(express.static(path.join(__dirname, 'static'), {
+  etag: false, //资源标记
+  maxAge: 0,//30 days 后过期, 单位ms
+  setHeaders: function (res, path, state) {
+    if(/\.(js|css|png|gif|jpg|jpeg|ico|mp3)$/.test(path)){
+      // 未来的一个过期时间
+      res.set('Expires', new Date(Date.now() + 2592000*1000).toGMTString());
+      res.set('Cache-Control', 'public, max-age=2592000');
+    }
+  }
+}));
 // 设置默认超时时间
 app.use(timeout('15s'));
 

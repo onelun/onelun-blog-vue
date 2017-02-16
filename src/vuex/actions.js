@@ -20,6 +20,15 @@ export const setShowBigAdminStatus = function ({commit}, status) {
  * @param commit
  * @param status
  */
-export const setLoadingStatuS = function ({commit}, status) {
+export const setLoadingStatus = function ({commit}, status) {
   commit(types.SET_LOADING_STATUS, status);
+};
+
+/**
+ * 更改播放器状态
+ * @param commit
+ * @param status
+ */
+export const setLockMusicStatus = function ({commit}, status) {
+  commit(types.SET_LOCK_MUSIC_STATUS, status);
 };

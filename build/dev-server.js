@@ -37,6 +37,18 @@ app.use(AV.express());
 app.use('/api/article', article);
 app.use('/api/user', user);
 app.use('/api/tag', tag);
+app.use(express.static(path.join(__dirname, 'static'), {
+  etag: false, //资源标记
+  maxAge: 0,//30 days 后过期, 单位ms
+  setHeaders: function (res, path, state) {
+    console.log(path);
+    if(/\.(js|css|png|gif|jpg|jpeg|ico|mp3)$/.test(path)){
+      // 未来的一个过期时间
+      res.set('Expires', new Date(Date.now() + 2592000*1000).toGMTString());
+      res.set('Cache-Control', 'public, max-age=2592000');
+    }
+  }
+}));
 //============================modify by onelun end==========================
 var compiler = webpack(webpackConfig)
 

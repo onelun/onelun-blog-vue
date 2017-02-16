@@ -8,7 +8,8 @@ import * as actions from './actions';
 import {
   SET_LOGIN_STATUS,
   SET_SHOW_BIGADMIN_STATUS,
-  SET_LOADING_STATUS
+  SET_LOADING_STATUS,
+  SET_LOCK_MUSIC_STATUS
 } from './mutation-types';
 // vuex模块
 // 告诉 vue “使用” vuex
@@ -24,7 +25,8 @@ export default new Vuex.Store({
   state: {
     isLogin: false, // 是否登录
     isShowBigAdmin: false,
-    isLoading: false // 是否在刷新中
+    isLoading: false, // 是否在刷新中
+    isLockMusic: true // 是否锁定播放器
   },
   // 全局突变事件处理
   mutations: {
@@ -37,6 +39,9 @@ export default new Vuex.Store({
     },
     [SET_LOADING_STATUS] (state, status) {
       state.isLoading = !!status;
+    },
+    [SET_LOCK_MUSIC_STATUS] (state, status) {
+      state.isLockMusic = !!status;
     }
 
   }

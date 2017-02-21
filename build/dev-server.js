@@ -21,6 +21,7 @@ var AV = require('leanengine');
 var article = require('../routes/Article');
 var user = require('../routes/User');
 var tag = require('../routes/Tag');
+var upload = require('../routes/Upload');
 AV.init({
   appId: process.env.LEANCLOUD_APP_ID || 'HfD1dEzwoukFqvmNWFYcpBN0-gzGzoHsz',
   appKey: process.env.LEANCLOUD_APP_KEY || 'gkn9Ym3Rhximmpnrzrzq1J5G',
@@ -37,6 +38,7 @@ app.use(AV.express());
 app.use('/api/article', article);
 app.use('/api/user', user);
 app.use('/api/tag', tag);
+app.use('/api/upload', upload);
 app.use(express.static(path.join(__dirname, 'static'), {
   etag: false, //资源标记
   maxAge: 0,//30 days 后过期, 单位ms
@@ -102,6 +104,7 @@ module.exports = app.listen(port, function (err) {
 
   // when env is testing, don't need open it
   if (process.env.NODE_ENV !== 'testing') {
+    console.log(uri);
     opn(uri)
   }
 })

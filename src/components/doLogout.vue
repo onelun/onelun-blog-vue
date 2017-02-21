@@ -33,7 +33,7 @@
       confirmLogout: function () {
         const _this = this;
         setTimeout(function () {
-          _this.$localStorage.$delete('authorization');
+          _this.$sessionStorage.$delete('authorization');
           _this.setLoginState(false); // 登录状态
           _this.$router.push({
             name: 'index'

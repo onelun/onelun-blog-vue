@@ -52,11 +52,11 @@
   import {getArticleLastList} from 'api/article';
   import Vue from 'vue';
   import API from '../../config.js';
-  import {Pagination, Loading} from 'element-ui';
+  import {Pagination} from 'element-ui';
+  import {mapState, mapActions} from 'vuex';
   export default{
     data() {
       return {
-        loading: {},
         articleList: [],
         hasData: true, // 是否有数据提示
         pageIndex: 1,
@@ -66,7 +66,15 @@
     mounted() {
       this.getArticleList();
     },
+    computed: {
+      ...mapState({
+        isLoading: 'isLoading'
+      })
+    },
     methods: {
+      ...mapActions({
+        setLoadingStatus: 'setLoadingStatus'
+      }),
       handleCurrentChange(val) {
         this.pageIndex = val;
         console.log(`当前页: ${val}`);
@@ -74,7 +82,7 @@
       },
       getArticleList: function () {
         let _this = this;
-        _this.loading = Loading.service({ target: '.articleList', text: '拼命加载中' });
+        _this.setLoadingStatus(true);
         getArticleLastList({pageIndex: _this.pageIndex, pageSize: API.pageSize}).then(function (results) {
           let articles = results.datas;
           _this.articleList = articles;
@@ -82,12 +90,12 @@
           if (articles.length === 0) {
             _this.hasData = false;
           }
-          console.log(_this.articleList);
-          _this.loading.close();
+          _this.setLoadingStatus(false);
         }, function () {
           _this.hasData = false;
+          _this.setLoadingStatus(false);
         }).then(function () {
-          _this.loading.close();
+          _this.setLoadingStatus(false);
           _this.articleList.length === 0 ? (_this.hasData = false) : ('');
         });
       }
@@ -103,14 +111,6 @@
     .article-header {
       width:100% !important;
     }
-  }
-  .loading{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 30%!important;
-    height: 50px;
-    margin:0 auto;
   }
   .articleList {
     padding-left: 4%;

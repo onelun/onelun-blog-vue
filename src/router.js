@@ -110,10 +110,11 @@ const routes = [
         ]
       }
     ]
-  }
+  },
+  { path: '*', component: require('./components/nodata.vue') }
 ];
 const router = new VueRouter({
-  mode: 'history', // 启用HTML5 history模式
+  mode: 'history',
   base: '/', // 应用的基路径
   routes: routes
 });
@@ -125,7 +126,7 @@ router.beforeEach((to, from, next) => {
     // 未登录状态
     if (!store.state.isLogin) {
       // 存在authorization信息，则验证下。
-      let authorization = !!Vue.$localStorage.authorization;
+      let authorization = !!Vue.$sessionStorage.authorization;
       if (authorization) {
         _checkAuth().then(function () {
           next();
@@ -162,7 +163,7 @@ router.beforeEach((to, from, next) => {
  * */
 function _checkAuth() {
   return new Promise(function (resolve, reject) {
-    let authorization = Vue.$localStorage.authorization || {};
+    let authorization = Vue.$sessionStorage.authorization || {};
     let time = parseInt(authorization.time);
     if ((new Date().getTime() - time) < 1000 * 60 * 60 * 2) {
       // token有效,能进入
@@ -171,7 +172,7 @@ function _checkAuth() {
       Vue.http.headers.common['authorization'] = 'token ' + authorization.token;
       resolve();
     } else {
-      Vue.$localStorage.$delete('authorization');
+      Vue.$sessionStorage.$delete('authorization');
       store.dispatch('setLoginState', false);
       reject();
     }

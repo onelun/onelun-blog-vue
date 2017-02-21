@@ -130,7 +130,7 @@
               token: _id,
               time: new Date().getTime()
             };
-            _this.$localStorage.$set('authorization', authorization);
+            _this.$sessionStorage.$set('authorization', authorization);
             // 设置请求的token
             Vue.http.headers.common['authorization'] = 'token ' + _id;
             _this.setLoginState(true); // 设置全局登录状态

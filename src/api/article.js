@@ -9,14 +9,19 @@ import {GetTagListByCache} from './tag';
 // 获取文章列表-for 最近更新
 export const getArticleLastList = function (params) {
   return new Promise((resolve, reject) => {
+    let tmp = Vue.$sessionStorage[API.getArticleLatestList];
+    if (!!tmp) {
+      console.log('文章列表数据缓存');
+      resolve(tmp);
+      return;
+    }
     let result = {};
     Vue.http.get(API.getArticleLatestList, { params: params }).then((response) => {
       // success callback
       result = response.data;
-      console.log(response.data);
       if (parseInt(result.code) === 1) {
         resolve(result);
-        // Vue.$sessionStorage.$set(url, result.data);
+        Vue.$sessionStorage.$set(API.getArticleLatestList, result);
       } else {
         reject(result);
       }
@@ -84,22 +89,18 @@ export const EditArticle = function (params) {
 
 export const GetArticleById = function (id) {
   return new Promise(function (resolve, reject) {
+    let tmp = Vue.$sessionStorage[API.getArticleById + '_' + id];
+    if (!!tmp) {
+      console.log('文章数据缓存');
+      resolve(tmp);
+      return;
+    }
+    console.log('文章获取网络数据');
     Vue.http.get(API.getArticleById, {params: {objectId: id}}).then((response) => {
       let result = response.data;
       if (parseInt(result.code) === 1) {
         resolve(result);
-        /* GetTagListByCache().then((tagResult) => {
-          let tags = tagResult.datas;
-          let selectedTags = [];
-          for (let tag of tags) {
-            let objectId = tag.objectId;
-            if (result.data.tags.includes(objectId)) {
-              selectedTags.push(tag);
-            }
-          }
-          result.data.tags = selectedTags;
-          resolve(result);
-        }); */
+        Vue.$sessionStorage.$set(API.getArticleById + '_' + id, result);
       } else {
         reject(doError(result));
       }

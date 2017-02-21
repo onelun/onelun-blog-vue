@@ -3,27 +3,18 @@
  */
 // 线上配置
 let CONFIG;
-if (process.env.NODE_ENV === 'production') {
-  CONFIG = {
-    url: 'http://www.onelun.site/api',
-    img: 'http://www.onelun.site/static/images',
-    music: 'http://www.onelun.site/static/music',
-    MY_INFO_ID: '578251be1cd6c37a04a4d50b',
-    MY: '我',
-    EMAIL: '76480877@163.com'
-  };
-} else {
-  CONFIG = {
-    url: '/api',
-    img: '/static/images',
-    music: '/static/music',
-    // 我的信息_id
-    MY_INFO_ID: '57ef5987e1bb0b0b7cbd17e8',
-    // 我对对评论进行回复的信息
-    MY: '我',
-    EMAIL: '76480877@163.com'
-  };
-}
+
+CONFIG = {
+  url: '/api',
+  img: '/static/img',
+  music: '/static/music',
+  upload: '/static/upload',
+  // 我的信息_id
+  MY_INFO_ID: '57ef5987e1bb0b0b7cbd17e8',
+  // 我对对评论进行回复的信息
+  MY: '我',
+  EMAIL: '76480877@163.com'
+};
 
 // 接口API根地址
 const url = CONFIG.url;
@@ -65,7 +56,9 @@ module.exports = {
   getTagList: `${url}/tag/getTagList`,
   editTag: `${url}/tag/editTag`,
   deleteTag: `${url}/tag/deleteTag`,
-
+  // 图片上传
+  imgUpload: `${url}/upload/imgupload`,
+  imgResource: '/static/uploads',
   /**
    * 背景切换
    */
@@ -76,14 +69,19 @@ module.exports = {
 
   musicList: [
     {
-      musicUrl: `${music}/wwhm.mp3`,
-      name: '未闻花名 - 口琴版',
-      player: '口琴（未知）'
-    },
-    {
       musicUrl: `${music}/gbqq.mp3`,
       name: '告白气球',
       player: '周杰伦'
+    },
+    {
+      musicUrl: `${music}/randy_and_ry.mp3`,
+      name: 'Randy and ry',
+      player: 'JJ Milteau'
+    },
+    {
+      musicUrl: `${music}/blow_wind.mp3`,
+      name: 'Blow in the wind',
+      player: 'Bobby Solo'
     }
   ]
 };

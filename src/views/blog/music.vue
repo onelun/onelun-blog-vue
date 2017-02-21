@@ -1,6 +1,6 @@
 <template>
   <div class="g-btmbar">
-    <div class="m-playbar" :class="{true:'m-playbar-lock',false:'m-playbar-unlock'}[isLockMusic]">
+    <div class="m-playbar m-playbar-lock" :class="{true:'',false:'m-playbar-unlock'}[isLockMusic]">
       <div class="updn">
         <div class="left f-fl">
           <a href="javascript:;" class="lockBtn" hidefocus="true" data-action="lock" @click="lockMusic()"></a>
@@ -59,10 +59,10 @@
   }
 
   .m-playbar-unlock {
-    transition:All 0.2s ease-in-out;
-    -webkit-transition:All 0.2s ease-in-out;
-    -moz-transition:All 0.2s ease-in-out;
-    -o-transition:All 0.2s ease-in-out;
+    transition:All 0.2s ease-in-out 0.3s;
+    -webkit-transition:All 0.2s ease-in-out 0.3s;
+    -moz-transition:All 0.2s ease-in-out 0.3s;
+    -o-transition:All 0.2s ease-in-out 0.3s;
     top: -7px !important;
     .updn .lockBtn {
       background-position: -80px -380px !important;
@@ -399,7 +399,6 @@
         _this.musicHandle.play();
         // 播放时间设置
         _this.clear = setInterval(function () {
-          console.log('500');
           _this._setMusicRightNow(_this.musicHandle.currentTime);
         }, 500);
       },

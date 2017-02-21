@@ -16,7 +16,7 @@
                    data-placement="right" title="博客">
         <i class="fa fa-map-signs fa-fw fa-lg"></i>
       </router-link>
-      <a class="nav-item fa-stack fa-lg hidden-xs" data-toggle="tooltip" data-placement="right" title="音乐"
+      <a class="nav-item fa-stack fa-lg" data-toggle="tooltip" data-placement="right" title="音乐"
          @click="changLockStatus()">
         <i class="fa fa-music fa-fw fa-lg"></i>
         <section class="rightBottomStatus">
@@ -42,6 +42,10 @@
         <section class="rightBottomStatus">
           <i class="fa fa-lg fa-refresh" :class="{true:'',false:'fa-spin'}[!isChangeBG]"></i>
         </section>
+      </a>
+      <a class="nav-item animated fadeIn hidden-xs" data-toggle="tooltip"
+         data-placement="right" title="清除缓存" @click="doClearCache()">
+        <i class="fa fa-database fa-lg"></i>
       </a>
       <a v-show="isLogin" class="nav-item animated fadeIn hidden-xs" data-toggle="tooltip"
          data-placement="right" title="退出" @click="doLoginout()">
@@ -215,6 +219,9 @@
       },
       doLoginout: function () {
         $('#logout').modal();
+      },
+      doClearCache: function () {
+        $('#clearCache').modal();
       },
       _loadImg(url, cb) {
         if (/.png$|.jpg$|.gif$/.test(url)) {

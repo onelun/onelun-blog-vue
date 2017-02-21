@@ -58,7 +58,7 @@ module.exports = {
                     // 重置全部后写入items => items保留其余重置
                     $reset: function (items) {
                         for (var k in _store) {
-                            k[0] || (delete _store[k] && _webStorage.removeItem(storageKeyPrefix + k)) === '$';
+                          k[0] === '$' || (delete _store[k] && _webStorage.removeItem(storageKeyPrefix + k)) === '$';
                         }
                         return _store.$set(items);
                     },

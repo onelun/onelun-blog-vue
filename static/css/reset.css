@@ -118,6 +118,9 @@ div.scroll-nav__wrapper ol li.scroll-nav__item:before, li.scroll-nav__sub-item:b
   font-family: FontAwesome;
   transition: all .2s ease;
 }
+.el-tooltip__popper {
+  display: none !important;
+}
 div.scroll-nav__wrapper ol li.active {
   color: #ccc;
   content: "\f0d7";

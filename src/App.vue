@@ -4,12 +4,11 @@
       <!--导航条-->
       <blog-nav></blog-nav>
       <!--路由外链-->
-      <keep-alive>
-        <router-view></router-view>
-      </keep-alive>
+      <router-view></router-view>
       <!--播放器导航条-->
       <music></music>
       <!--退出弹层-->
+      <do-clear-cache></do-clear-cache>
       <do-logout></do-logout>
       <loading v-if="isLoading"></loading>
     </div>
@@ -32,6 +31,7 @@
   import Vue from 'vue';
   import blogNav from 'views/blog/nav.vue';
   import doLogout from 'components/doLogout.vue';
+  import doClearCache from 'components/doClearCache.vue';
   import music from 'views/blog/music';
   import vueMoment from 'vue-moment';
   import moment from 'moment';
@@ -65,6 +65,7 @@
     components: {
       blogNav,
       doLogout,
+      doClearCache,
       loading,
       music
     }

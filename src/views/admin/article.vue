@@ -395,7 +395,8 @@
 
   import {GetTagListByCache} from 'api/tag';
   import {EditArticle, GetArticleById} from 'api/article';
-  // import {ImageUpload} from 'api/upload';
+  import {ImageUpload} from 'api/upload';
+  import {addImgPrefix} from 'utils/filters';
   import {autoTextarea} from 'utils/autoTextarea';
   import {mapState, mapActions} from 'vuex';
   import {Message} from 'element-ui';
@@ -628,7 +629,7 @@
       /**
        * 1. 选择图片,获得filer信息
        * */
-      /* $('#imgUpload').change(function (e) {
+      $('#imgUpload').change(function (e) {
         // 文件句柄
         var file = e.target.files[0];
         // 只处理图片
@@ -636,14 +637,14 @@
           return null;
         }
         _this.isImgLoading = true;
-        ImageUpload(file).then(function (imageName) {
-          _this.uploadImgUrl = addImgPrefix(imageName);
+        ImageUpload(file).then(function (result) {
+          _this.uploadImgUrl = addImgPrefix(result.data);
         }, function () {
           alert('upload error');
         }).then(function () {
           _this.isImgLoading = false;
         });
-      }); */
+      });
     },
     components: {
       copyright,

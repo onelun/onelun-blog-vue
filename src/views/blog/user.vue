@@ -9,9 +9,9 @@
             <router-link :to="{ name: 'login', query: { userType: 'login' }}" activeClass="active" tag="a">登录
             </router-link>
           </li>
-          <li data-name="register_page">
+          <!--<li data-name="register_page">
             <router-link :to="{ name: 'register'}" activeClass="active" tag="a">注册</router-link>
-          </li>
+          </li>-->
         </ul>
         <keep-alive>
         <router-view></router-view>

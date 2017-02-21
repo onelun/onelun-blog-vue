@@ -22,7 +22,7 @@
         <section class="index-btnBox">
           <router-link class="index-btnBox-each text-center" :to="{ name: 'blog'}" activeClass="active" tag="div">我的博客
           </router-link>
-          <router-link class="index-btnBox-each text-center" :to="{ name: 'music'}" activeClass="active" tag="div">我的音乐
+          <router-link class="index-btnBox-each text-center" :to="{ name: 'index'}" activeClass="active" tag="div">我的首页
           </router-link>
         </section>
         <section class="index-copyright">

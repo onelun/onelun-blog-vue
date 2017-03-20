@@ -95,7 +95,7 @@ module.exports = {
                 };
 
                 // 初始化从本地拉数据
-                _store.$fetch();
+                 _store.$fetch();
 
                 // 设置代理
                 var logHandler = {

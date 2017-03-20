@@ -11,7 +11,7 @@
             <div class="form-inline">
               <div class="form-group titleBox" :class="{true:'has-error',false:''}[!article.title]">
                 <label for="artTitle">文章标题</label>
-                <input type="text" name="title" v-model="article.title" class="form-control" id="artTitle" placeholder="请输入文章标题" required>
+                <input type="text" name="title" v-model="article.title" class="form-control" id="artTitle" placeholder="请输入文章标题">
               </div>
             </div>
             <div class="form-inline">
@@ -42,23 +42,36 @@
               </div>
             </div>
             <div class="form-inline other_form_2">
+              <div class="form-group sourceBox">
+                <label>文章来源</label>
+                <div class="input-group date dropdown">
+                  <el-switch v-model="source" on-text="本地" off-text="外链" on-color="#13ce66"
+                      off-color="#ff4949" @change="switchChange()"></el-switch>
+                </div>
+              </div>
+              <div class="form-group linkBox" :class="{true:'has-error',false:''}[!article.link]">
+                <label for="link">Link外链</label>
+                <input type="text" name="link" v-model="article.link" class="form-control" id="link" placeholder="请输入链接地址">
+              </div>
+            </div>
+            <div class="form-inline other_form_2">
               <div class="form-group tagsBox">
                 <label>添加标签</label>
                 <multiselect class="form-control multiselect other_form&#45;&#45;input small" id="tags"
-                      v-model="selected" tag-placeholder="Add this as new tag" placeholder="请选择" label="name"
-                      track-by="objectId" :max="3" :options="options" :multiple="true" :taggable="true" :limit="3"
-                      :searchable="true" :close-on-select="false" @input="updateValueAction"
-                      deselect-label="点击移除" select-label="点击选择" selected-label="当前选择">
+                             v-model="selected" tag-placeholder="Add this as new tag" placeholder="请选择" label="name"
+                             track-by="objectId" :max="3" :options="options" :multiple="true" :taggable="true" :limit="3"
+                             :searchable="true" :close-on-select="false" @input="updateValueAction"
+                             deselect-label="点击移除" select-label="点击选择" selected-label="当前选择">
                   <template slot="maxElements" scope="props">
                     <div>最多选择3项, 如果选择其他请先移除。</div>
                   </template>
                 </multiselect>
               </div>
               <div class="btn-group" role="group">
-                <button class="btn btn-info" @click="publishBtn()" v-bind:disabled="!article.title || !contentRaw || isPublishing">
+                <button class="btn btn-info" @click="publishBtn()" v-bind:disabled="!article.title || !contentRaw || isPublishing || (!source && !article.link)">
                   <i class="fa fa-fw" :class="{true:'fa-spinner fa-spin',false:'fa-rocket'}[isPublishing]"></i> 发布
                 </button>
-                <button class="btn btn-default" @click="draftBtn()" v-bind:disabled="!article.title || !contentRaw || isPublishing">
+                <button class="btn btn-default" @click="draftBtn()" v-bind:disabled="!article.title || !contentRaw || isPublishing || (!source && !article.link)">
                   <i class="fa fa-fw" :class="{true:'fa-spinner fa-spin',false:'fa-save'}[isDrafting]"></i> 草稿
                 </button>
                 <button @click="previewBtn()" class="btn btn-default showPreview">
@@ -69,6 +82,7 @@
             </div>
           </div>
         </div>
+
         <div class="articleEdit">
           <label for="textarea">文章详情(MarkDown编辑)</label>
           <div class="textaresBox textaresBox_input">
@@ -230,6 +244,19 @@
                   .multiselect__tags {
                     min-height: 34px !important;
                   }
+                }
+              }
+              .sourceBox {
+                display: flex;
+                align-items: center;
+              }
+              .linkBox {
+                width: 80%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                input {
+                  flex: 1;
                 }
               }
               .input-group-addon {
@@ -399,7 +426,7 @@
   import {addImgPrefix} from 'utils/filters';
   import {autoTextarea} from 'utils/autoTextarea';
   import {mapState, mapActions} from 'vuex';
-  import {Message} from 'element-ui';
+  import {Message, Switch} from 'element-ui';
 
   import 'assets/css/codeHighLight.css';
   import 'assets/css/markdown.scss';
@@ -423,6 +450,7 @@
       return hljs.highlightAuto(code).value;
     }
   });
+
   export default {
     data() {
       return {
@@ -435,7 +463,8 @@
         uploadImgUrl: '',
         isPublishing: false,
         isDrafting: false,
-        isImgLoading: false
+        isImgLoading: false,
+        source: true
       };
     },
     computed: {
@@ -444,6 +473,13 @@
       })
     },
     methods: {
+      // 来源监听
+      switchChange() {
+        let _this = this;
+        /* if (!_this.source) {
+          _this.setShowBigAdminStatus(false);
+        } */
+      },
       // 标签多选更新
       updateValueAction(value) {
         this.selected = value;
@@ -459,6 +495,7 @@
           _this.contentMarked = marked(_this.contentRaw);
           _this.publishTime = moment(new Date(_this.article.publishTime)).format('YYYY/MM/DD HH:mm:ss');
           _this.selected = data.tags;
+          _this.source = data.source;
           setTimeout(function () {
             autoTextarea($textArea, 10);
           }, 0);
@@ -480,7 +517,9 @@
           'publishTime': new Date(_this.publishTime),
           'state': _this.article.state,
           'content': _this.contentRaw,
-          'tags': tagsArr
+          'tags': tagsArr,
+          'source': _this.source,
+          'link': _this.article.link
         };
         return params;
       },
@@ -541,6 +580,9 @@
           return false;
         }
         if (!_this.contentRaw) {
+          return false;
+        }
+        if (!_this.source && !_this.article.link) {
           return false;
         }
         if (_this.article.state) {
@@ -612,7 +654,9 @@
           'publishTime': new Date(),
           'tags': [],
           'state': false,
-          'content': ''
+          'content': '',
+          'link': '',
+          'source': true
         };
         // 时间
         _this.publishTime = moment(new Date()).format('YYYY/MM/DD HH:mm:ss');
@@ -648,7 +692,8 @@
     },
     components: {
       copyright,
-      Multiselect
+      Multiselect,
+      ElSwitch: Switch
     },
     destroyed() {
       this.setShowBigAdminStatus(false);

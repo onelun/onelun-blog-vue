@@ -19,6 +19,7 @@ router.get('/latestList', function(req, res, next) {
   query.count().then((count) => {
     queryResult.total = count;
     query.descending('updatedAt');
+    query.equalTo('state', true);
     query.limit(pageSize);
     query.skip((pageIndex-1)*pageSize);
     query.find().then(function(results) {
@@ -68,6 +69,8 @@ router.post('/editArticle', function(req, res, next) {
   Article.set('tags', req.body.tags);
   Article.set('state', req.body.state);
   Article.set('content', req.body.content);
+  Article.set('source', req.body.source);
+  Article.set('link', req.body.link);
   Article.set('abstract', req.body.content.substring(0, 120) + '...');
   // 保存到云端
   Article.save().then((Article) => {
@@ -92,6 +95,16 @@ router.get('/getArticleById', function(req, res, next) {
     errorResult.messages = '查询失败,失败原因：'+err.message;
     res.json(result);
   }).catch(next);
+});
+
+router.post('/incrementReadNum', function(req, res, next) {
+  let objectId = req.body.objectId;
+  let Article = AV.Object.createWithoutData('Article', objectId);
+  Article.increment('readNum', 1);
+  Article.save(null, {fetchWhenSave: true}).catch((error) => {
+    console.error(error);
+  });
+  res.json(successResult);
 });
 
 module.exports = router;

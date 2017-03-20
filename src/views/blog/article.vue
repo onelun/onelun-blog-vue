@@ -39,9 +39,9 @@
             </section>
             <!--the end-->
           </div>
-          <!--评论-->
+          <!--多说评论框-->
           <section id="comment" class="commentbox">
-
+            <div id="commentBox"></div>
           </section>
         </div>
         <copyright></copyright>
@@ -165,7 +165,7 @@
     }
     .commentbox {
       background-color: $base-background-color;
-      padding: 0;
+      padding: 0 30px 0 30px;
       border-radius: 3px;
       border-bottom: 3px solid $base-theme-color;
       position: relative;
@@ -250,7 +250,8 @@
 <script type="text/javascript">
   import API from '../../config.js';
   import marked from 'marked';
-  import {GetArticleById, GetArticleTop} from 'api/article';
+  import hljs from 'highlight.js';
+  import {GetArticleById, GetArticleTop, IncrementReadNum} from 'api/article';
   import 'assets/css/codeHighLight.css';
   import 'assets/css/markdown.scss';
   import 'bootstrap/scss/bootstrap/_breadcrumbs.scss';
@@ -274,6 +275,9 @@
     data: function () {
       return {
         article: {},
+        articleId: this.$route.params.articleId,
+        title: this.$route.params.title,
+        dataUrl: 'https://onelun.leanapp.cn/article/',
         contentMarked: ''
       };
     },
@@ -282,16 +286,37 @@
         isLoading: 'isLoading'
       })
     },
+    mounted() {
+      let _this = this;
+      let articleId = this.$route.params.articleId;
+      _this.incrementReadNum(articleId);
+      setTimeout(function () {
+        _this.toggleDuoshuoComments('#commentBox');
+      }, 500);
+    },
     methods: {
       ...mapActions({
         setLoadingStatus: 'setLoadingStatus'
       }),
+      incrementReadNum(articleId) {
+        let _this = this;
+        IncrementReadNum(articleId);
+      },
+      toggleDuoshuoComments(container) {
+        var el = document.createElement('div'); // 该div不需要设置class="ds-thread"
+        el.setAttribute('data-thread-key', this.articleId); // 必选参数
+        el.setAttribute('data-url', this.dataUrl); // 必选参数
+        el.setAttribute('data-author-key', this.articleId); // 可选参数
+        DUOSHUO.EmbedThread(el);
+        $(container).append(el);
+      },
       /**
        * 获取数据
        * @param articleId 文章id
        * */
       getArticleById: function (articleId) {
-        const _this = this;
+        let _this = this;
+        this.dataUrl = 'https://onelun.leanapp.cn/article/' + articleId;
         _this.setLoadingStatus(true);
          GetArticleById(articleId).then(function (result) {
           _this.article = result.data;

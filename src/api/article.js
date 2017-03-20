@@ -9,7 +9,7 @@ import {GetTagListByCache} from './tag';
 // 获取文章列表-for 最近更新
 export const getArticleLastList = function (params) {
   return new Promise((resolve, reject) => {
-    let tmp = Vue.$sessionStorage[API.getArticleLatestList];
+    let tmp = Vue.$sessionStorage[API.getArticleLatestList + params.pageIndex];
     if (!!tmp) {
       console.log('文章列表数据缓存');
       resolve(tmp);
@@ -21,7 +21,7 @@ export const getArticleLastList = function (params) {
       result = response.data;
       if (parseInt(result.code) === 1) {
         resolve(result);
-        Vue.$sessionStorage.$set(API.getArticleLatestList, result);
+        Vue.$sessionStorage.$set(API.getArticleLatestList + params.pageIndex, result);
       } else {
         reject(result);
       }
@@ -78,6 +78,7 @@ export const EditArticle = function (params) {
       let result = response.data;
       if (parseInt(result.code) === 1) {
         resolve(result);
+        Vue.$sessionStorage.$delete(API.getArticleById + '_' + params['objectId']);
       } else {
         reject(doError(result));
       }
@@ -101,6 +102,20 @@ export const GetArticleById = function (id) {
       if (parseInt(result.code) === 1) {
         resolve(result);
         Vue.$sessionStorage.$set(API.getArticleById + '_' + id, result);
+      } else {
+        reject(doError(result));
+      }
+    }, (error) => {
+      reject(doError(error));
+    });
+  });
+};
+export const IncrementReadNum = function (id) {
+  return new Promise(function (resolve, reject) {
+    Vue.http.post(API.incrementReadNum, {objectId: id}).then((response) => {
+      let result = response.data;
+      if (parseInt(result.code) === 1) {
+        resolve(result);
       } else {
         reject(doError(result));
       }

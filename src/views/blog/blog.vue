@@ -25,11 +25,12 @@
 <style lang="scss">
   @import "../../assets/css/theme.scss";
   .blog-content {
-    position: absolute;
+    position: fixed;
     width: 100%;
     height: 100%;
     background: white;
     .recommended {
+      overflow-y:scroll;
       position: absolute;
       width: 58%;
       height: 100%;

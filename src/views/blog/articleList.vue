@@ -1,12 +1,18 @@
 <template>
     <div class="main">
       <div class="articleList">
-        <router-link class="article" v-for="article of articleList" :key="article.objectId"
-                     :to="{ name: 'article',params: { articleId: article.objectId }}" activeClass="active" tag="article">
+        <div v-for="article of articleList" class="article" >
           <div class="article-content">
             <div class="article-header">
+              <router-link :key="article.objectId" activeClass="active"
+                           :to="{ name: 'article',params: { articleId: article.objectId, title: article.title }}" tag="article" v-if="article.source">
               <h2 class="article-header-title">{{article.title}}</h2>
               <div class="article-header-content">{{article.abstract}}</div>
+              </router-link>
+              <a v-if="!article.source" :href="article.link" target="_blank" title="跳转第三方网址">
+              <h2 class="article-header-title">{{article.title}}</h2>
+              <div class="article-header-content">{{article.abstract}}</div>
+              </a>
             </div>
             <div class="article-img hidden-xs">
               <img src="../../assets/images/img-box.png">
@@ -18,26 +24,27 @@
                 <i class="fa fa-calendar"></i>
                 <span>{{article.createdAt | moment("from","now")}}</span>
               </div>
-              <div class="article-info-item">
+              <div class="article-info-item" v-if="article.source">
                 <i class="fa fa-book"></i>阅读数
                 <span class="article-readnum">{{article.readNum}}</span>
               </div>
-              <div class="article-info-item">
+              <!--<div class="article-info-item">
                 <i class="fa fa-comments"></i>评论数
                 <span class="article-comment">{{article.commentNum}}</span>
-              </div>
+              </div>-->
               <div class="article-info-item hidden-xs" v-for="tag of article.tags">
                 <i class="fa fa-tag"></i>
                 <span>{{tag.name}}</span>
               </div>
             </div>
           </div>
-        </router-link>
+        </div>
         <no-data v-if="!hasData"></no-data>
         <Pagination class="pagination" v-if="hasData"
           @current-change="handleCurrentChange"
           :current-page="pageIndex"
           layout="prev, pager, next"
+          :page-size="5"
           :total="total">
         </Pagination>
       </div>
@@ -87,6 +94,7 @@
           let articles = results.datas;
           _this.articleList = articles;
           _this.total = results.total;
+          console.log(_this.total);
           if (articles.length === 0) {
             _this.hasData = false;
           }
@@ -117,10 +125,13 @@
     width: 100%;
     .pagination {
       text-align: center;
-      margin: 8px 0 8px 0;
+      margin: 8px 0 58px 0;
+      width: 100%;
+    }
+    a:hover{
+      text-decoration:none;
     }
     .article {
-      cursor: pointer;
       overflow: hidden;
       border-bottom: 1px solid #f0f0f0;
       .article-content {
@@ -137,6 +148,7 @@
           color: $base-word-color;
           font-size: 20px;
           line-height: 28px;
+          cursor: pointer;
           .article-header-title {
             color: #000;
             text-align: left;

@@ -32,8 +32,7 @@ module.exports = {
       'jquery': path.resolve(__dirname, '../src/plugin/jquery.min.js'),
       'plugin': path.resolve(__dirname, '../src/plugin'),
       'api': path.resolve(__dirname, '../src/api'),
-      // 插件位置
-      // "vue-multiselect": path.resolve(__dirname, '../src/plugin/vue-multiselect/Multiselect.vue'),
+      "validation": path.resolve(__dirname, '../src/plugin/form.validation'),
       "bootstrap": path.resolve(__dirname, '../src/plugin/bootstrap'),
       "bootstrap-datetimepicker": path.resolve(__dirname, '../src/plugin/bootstrap-datetimepicker')
     }

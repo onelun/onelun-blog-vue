@@ -48,6 +48,7 @@ module.exports = {
   deleteArticle: `${url}/article/deleteArticle`,
   editArticle: `${url}/article/editArticle`,
   getArticleById: `${url}/article/getArticleById`,
+  incrementReadNum: `${url}/article/incrementReadNum`,
   // 注册&登录
   register: `${url}/user/register`,
   login: `${url}/user/login`,
